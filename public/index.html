@@ -373,7 +373,8 @@
       height: auto;
       min-height: 430px;
       background:
-        linear-gradient(135deg, color-mix(in srgb, var(--paper) 80%, #ffffff 20%), color-mix(in srgb, var(--paper) 88%, #b9d6ca 12%));
+        radial-gradient(circle at 80% 15%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 13rem),
+        linear-gradient(135deg, color-mix(in srgb, var(--paper) 82%, #ffffff 18%), color-mix(in srgb, var(--paper) 91%, #b9d6ca 9%));
       border-radius: var(--radius);
     }
 
@@ -401,32 +402,56 @@
 
     .route-path.fixed {
       stroke: var(--fixed-route);
-      stroke-width: 13;
+      stroke-width: 7;
       opacity: 0.96;
     }
 
     .route-path.plan-a {
       stroke: var(--d5a);
-      stroke-width: 10;
+      stroke-width: 5.5;
       opacity: 0.96;
     }
 
     .route-path.plan-b {
       stroke: var(--d5b);
-      stroke-width: 10;
+      stroke-width: 5.5;
       opacity: 0.96;
     }
 
     .route-path.alt-hint {
-      stroke-width: 5;
+      stroke-width: 3.5;
       stroke-dasharray: 12 10;
       opacity: 0.62;
+    }
+
+    .route-shadow {
+      fill: none;
+      stroke: color-mix(in srgb, var(--paper) 72%, #000 28%);
+      stroke-width: 13;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.16;
+    }
+
+    .xinjiang-shape {
+      fill: color-mix(in srgb, var(--accent) 14%, var(--paper));
+      stroke: color-mix(in srgb, var(--accent) 28%, var(--line));
+      stroke-width: 2;
+      opacity: 0.46;
+    }
+
+    .xinjiang-ridge {
+      fill: none;
+      stroke: color-mix(in srgb, var(--accent-2) 22%, transparent);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      opacity: 0.72;
     }
 
     .node {
       fill: var(--paper);
       stroke: var(--ink);
-      stroke-width: 2.4;
+      stroke-width: 1.8;
     }
 
     .night {
@@ -438,7 +463,7 @@
     .confirmed-node {
       fill: var(--fixed-route);
       stroke: var(--paper);
-      stroke-width: 2.5;
+      stroke-width: 2;
     }
 
     .confirmed-label {
@@ -448,13 +473,13 @@
     .plan-a-node {
       fill: var(--d5a);
       stroke: var(--paper);
-      stroke-width: 2.5;
+      stroke-width: 2;
     }
 
     .plan-b-node {
       fill: var(--d5b);
       stroke: var(--paper);
-      stroke-width: 2.5;
+      stroke-width: 2;
     }
 
     .legend {
@@ -861,47 +886,58 @@
           <text x="34" y="42" class="map-small">N</text>
           <path d="M38 72 L38 28 L29 43 M38 28 L47 43" stroke="currentColor" stroke-width="2" fill="none"/>
 
+          <g aria-hidden="true">
+            <path class="xinjiang-shape" d="M92 323 C78 285, 106 250, 91 216 C72 176, 102 137, 148 126 C178 119, 192 91, 229 85 C260 80, 282 104, 310 96 C350 85, 365 105, 398 100 C438 94, 468 119, 493 146 C516 171, 559 170, 586 199 C617 233, 605 275, 634 306 C657 331, 626 365, 586 369 C545 373, 526 398, 493 421 C452 449, 399 434, 363 456 C329 476, 292 450, 253 458 C216 466, 190 437, 157 433 C120 429, 106 361, 92 323 Z"/>
+            <path class="xinjiang-ridge" d="M128 299 C194 274, 255 267, 318 284 C367 297, 423 295, 482 276 C526 261, 565 264, 608 286"/>
+            <path class="xinjiang-ridge" d="M168 177 C214 170, 259 177, 303 194 C345 211, 389 214, 432 205 C476 196, 522 207, 562 231"/>
+            <text x="493" y="409" class="map-small" style="opacity:.8">新疆轮廓示意</text>
+          </g>
+
+          <path class="route-shadow" d="M532 116 C492 134, 448 150, 406 177 C374 198, 345 226, 322 250 C280 226, 237 210, 196 190 C155 170, 120 142, 92 110 C126 122, 156 133, 187 151 C218 170, 245 194, 273 218 C252 252, 230 283, 208 318 C194 341, 181 363, 165 388"/>
+          <path class="route-shadow" d="M165 388 C188 407, 217 426, 256 438 C276 392, 298 350, 328 306 C356 263, 350 255, 322 250 C383 213, 456 169, 532 116"/>
+          <path class="route-shadow" d="M165 388 C190 330, 228 269, 273 218 C227 183, 160 148, 92 110 C178 103, 272 117, 372 122 C430 124, 484 119, 532 116"/>
+
           <path class="route-path fixed" filter="url(#rough)" d="M532 116 C492 134, 448 150, 406 177 C374 198, 345 226, 322 250 C280 226, 237 210, 196 190 C155 170, 120 142, 92 110 C126 122, 156 133, 187 151 C218 170, 245 194, 273 218 C252 252, 230 283, 208 318 C194 341, 181 363, 165 388"/>
           <path class="route-path plan-a" filter="url(#rough)" d="M165 388 C188 407, 217 426, 256 438 C276 392, 298 350, 328 306 C356 263, 350 255, 322 250 C383 213, 456 169, 532 116"/>
           <path class="route-path plan-b" filter="url(#rough)" d="M165 388 C190 330, 228 269, 273 218 C227 183, 160 148, 92 110 C178 103, 272 117, 372 122 C430 124, 484 119, 532 116"/>
 
-          <circle class="confirmed-node" cx="532" cy="116" r="8"/>
+          <circle class="confirmed-node" cx="532" cy="116" r="6"/>
           <text x="545" y="113" class="map-label confirmed-label">乌鲁木齐机场</text>
           <text x="545" y="133" class="map-small">已定：D6 机场亚朵</text>
 
-          <circle class="confirmed-node" cx="322" cy="250" r="8"/>
+          <circle class="confirmed-node" cx="322" cy="250" r="6"/>
           <text x="336" y="251" class="map-label confirmed-label">独山子</text>
           <text x="336" y="271" class="map-small">已定：D1 独山子亚朵</text>
 
-          <circle class="node" cx="207" cy="194" r="6"/>
+          <circle class="node" cx="207" cy="194" r="5"/>
           <text x="211" y="184" class="map-label">精河/博乐</text>
           <text x="211" y="204" class="map-small">补给与回撤节点</text>
 
-          <circle class="confirmed-node" cx="92" cy="110" r="8"/>
+          <circle class="confirmed-node" cx="92" cy="110" r="6"/>
           <text x="105" y="104" class="map-label confirmed-label">赛里木湖</text>
           <text x="105" y="124" class="map-small">已定：D2 Elaine御墅民俗</text>
 
-          <circle class="node" cx="176" cy="145" r="6"/>
+          <circle class="node" cx="176" cy="145" r="5"/>
           <text x="122" y="169" class="map-label">果子沟</text>
           <text x="122" y="189" class="map-small">大桥、峡谷</text>
 
-          <circle class="confirmed-node" cx="273" cy="218" r="8"/>
+          <circle class="confirmed-node" cx="273" cy="218" r="6"/>
           <text x="287" y="214" class="map-label confirmed-label">伊宁</text>
           <text x="287" y="234" class="map-small">已定：D3 红旗路亚朵</text>
 
-          <circle class="node" cx="165" cy="388" r="7"/>
+          <circle class="node" cx="165" cy="388" r="5.5"/>
           <text x="179" y="386" class="map-label">那拉提/新源</text>
           <text x="179" y="406" class="map-small">D4 住宿待订</text>
 
-          <circle class="plan-a-node" cx="256" cy="438" r="8"/>
+          <circle class="plan-a-node" cx="256" cy="438" r="6"/>
           <text x="269" y="436" class="map-label" style="font-weight:900">巴音布鲁克</text>
           <text x="269" y="456" class="map-small">Plan A D5 待订</text>
 
-          <circle class="node" cx="328" cy="306" r="6"/>
+          <circle class="node" cx="328" cy="306" r="5"/>
           <text x="342" y="305" class="map-label">乔尔玛</text>
           <text x="342" y="325" class="map-small">独库北段判断点</text>
 
-          <circle class="plan-b-node" cx="382" cy="122" r="8"/>
+          <circle class="plan-b-node" cx="382" cy="122" r="6"/>
           <text x="395" y="119" class="map-label" style="font-weight:900">清水河/精河</text>
           <text x="395" y="139" class="map-small">Plan B D5 待订</text>
         </svg>
