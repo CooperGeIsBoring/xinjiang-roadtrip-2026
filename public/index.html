@@ -122,6 +122,119 @@
       font-size: 13px;
     }
 
+    .prep {
+      padding: 16px;
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--paper) 92%, var(--warn-bg) 8%);
+      border: 1px solid color-mix(in srgb, var(--warn) 22%, var(--line));
+      box-shadow: var(--shadow);
+    }
+
+    .prep-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .prep-head h2 {
+      margin: 3px 0 2px;
+      font-size: clamp(24px, 6vw, 38px);
+      line-height: 1.14;
+    }
+
+    .prep-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .prep-count {
+      flex: 0 0 auto;
+      min-width: 92px;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      background: var(--warn-bg);
+      color: var(--warn);
+      border: 1px solid color-mix(in srgb, var(--warn) 32%, transparent);
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .prep-count strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .prep-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .prep-item {
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      min-width: 0;
+      padding: 11px;
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      border: 1px solid var(--line);
+    }
+
+    .prep-item strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .prep-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .tag {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--warn);
+      background: var(--warn-bg);
+      border: 1px solid color-mix(in srgb, var(--warn) 26%, transparent);
+      white-space: nowrap;
+    }
+
+    .tag.soft {
+      color: var(--accent-2);
+      background: color-mix(in srgb, var(--accent-2) 13%, var(--paper));
+      border-color: color-mix(in srgb, var(--accent-2) 25%, transparent);
+    }
+
+    .tag.ok {
+      color: var(--ok);
+      background: var(--ok-bg);
+      border-color: color-mix(in srgb, var(--ok) 28%, transparent);
+    }
+
+    .done-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
     .focus {
       padding: 18px;
       border-radius: var(--radius);
@@ -601,12 +714,22 @@
         max-width: none;
       }
 
+      .prep-head {
+        display: block;
+      }
+
+      .prep-count {
+        display: inline-block;
+        margin-top: 10px;
+      }
+
       .section-head p {
         margin-top: 4px;
         text-align: left;
       }
 
       .grid,
+      .prep-grid,
       .tips {
         grid-template-columns: 1fr;
       }
@@ -651,6 +774,60 @@
       </div>
       <div class="public-note">公开页只放出行所需信息，不包含确认号、证件号、房号、二维码和付款信息。</div>
     </header>
+
+    <section class="prep" aria-labelledby="prep-title">
+      <div class="prep-head">
+        <div>
+          <div class="eyebrow">出发前准备</div>
+          <h2 id="prep-title">现在还差这些</h2>
+          <p>先锁住宿和预约，再处理临行复核。D4/D5 定下来后，整条路线就会稳很多。</p>
+        </div>
+        <div class="prep-count"><strong>7</strong>项待办</div>
+      </div>
+      <div class="prep-grid">
+        <div class="prep-item">
+          <span class="tag">必须</span>
+          <div><strong>D4 那拉提/新源住宿</strong><p>10/4 晚，优先可取消、停车方便、靠近第二天出发方向。</p></div>
+        </div>
+        <div class="prep-item">
+          <span class="tag">必须</span>
+          <div><strong>D5 双备选住宿</strong><p>巴音布鲁克用于 Plan A；清水河/精河用于 Plan B，最好都可取消。</p></div>
+        </div>
+        <div class="prep-item">
+          <span class="tag soft">预约</span>
+          <div><strong>赛里木湖自驾入园</strong><p>核对门票、车牌要求、国庆限流；车牌取车后再补也要有预案。</p></div>
+        </div>
+        <div class="prep-item">
+          <span class="tag soft">预约</span>
+          <div><strong>那拉提门票/自驾票</strong><p>确认可预约日期、入园时段和自驾规则，避免 D4/D5 被动改线。</p></div>
+        </div>
+        <div class="prep-item">
+          <span class="tag soft">预约</span>
+          <div><strong>巴音布鲁克门票</strong><p>只服务 Plan A；重点看停止检票、区间车末班和日落时间。</p></div>
+        </div>
+        <div class="prep-item">
+          <span class="tag">路况</span>
+          <div><strong>独库公告和天气</strong><p>出发前持续看独库、乔尔玛、巴音布鲁克、独山子方向公告和天气。</p></div>
+        </div>
+        <div class="prep-item">
+          <span class="tag soft">复核</span>
+          <div><strong>航班/还车/酒店细节</strong><p>复核值机柜台、行李额度、10/7 还车节奏、酒店停车和最晚到店。</p></div>
+        </div>
+        <div class="prep-item">
+          <span class="tag ok">已定</span>
+          <div><strong>主骨架已锁定</strong><p>航班、租车、D1/D2/D3/D6 住宿已定，剩下是把分支风险收窄。</p></div>
+        </div>
+      </div>
+      <div class="done-strip" aria-label="已完成事项">
+        <span class="badge">9C6495 去程</span>
+        <span class="badge">UQ2599 返程</span>
+        <span class="badge">理想 L8</span>
+        <span class="badge">D1 独山子亚朵</span>
+        <span class="badge">D2 Elaine御墅民俗</span>
+        <span class="badge">D3 伊宁亚朵</span>
+        <span class="badge">D6 机场亚朵</span>
+      </div>
+    </section>
 
     <section class="focus" aria-labelledby="focus-title">
       <div class="eyebrow">此刻关注</div>
