@@ -1,0 +1,7 @@
+.agents/
+.codex/
+.git/
+outputs/
+work/
+*.md
+!README.md
