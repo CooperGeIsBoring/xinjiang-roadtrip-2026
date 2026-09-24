@@ -255,6 +255,54 @@
       font-size: 13px;
     }
 
+    .section-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 6px;
+      margin: 0 -4px 14px;
+      padding: 8px 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .section-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .section-tabs a {
+      flex: 0 0 auto;
+      min-height: 38px;
+      padding: 7px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: color-mix(in srgb, var(--paper) 94%, transparent);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .section-tabs a[aria-current="true"] {
+      color: var(--paper);
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    #prep,
+    #weather,
+    #overview,
+    #orders,
+    #days,
+    #restrooms {
+      scroll-margin-top: 68px;
+    }
+
     .weather-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -746,25 +794,6 @@
       border-left: 5px solid var(--branch-color, var(--accent));
     }
 
-    .todo {
-      columns: 2;
-      column-gap: 26px;
-      padding-left: 20px;
-      margin: 0;
-    }
-
-    .todo li {
-      break-inside: avoid;
-      margin: 0 0 9px;
-      padding-left: 2px;
-    }
-
-    .tips {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
     .poop-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -846,8 +875,7 @@
       .grid,
       .prep-grid,
       .weather-grid,
-      .poop-list,
-      .tips {
+      .poop-list {
         grid-template-columns: 1fr;
       }
 
@@ -876,9 +904,6 @@
         grid-template-columns: 68px minmax(0, 1fr);
       }
 
-      .todo {
-        columns: 1;
-      }
     }
   </style>
 </head>
@@ -892,7 +917,16 @@
       <div class="public-note">公开页只放出行所需信息，不包含确认号、证件号、房号、二维码和付款信息。</div>
     </header>
 
-    <section class="prep" aria-labelledby="prep-title">
+    <nav class="section-tabs" aria-label="页面索引">
+      <a href="#prep" aria-current="true">准备 · 6</a>
+      <a href="#weather">天气</a>
+      <a href="#overview">地图</a>
+      <a href="#orders">预订</a>
+      <a href="#days">行程</a>
+      <a href="#restrooms">厕所</a>
+    </nav>
+
+    <section class="prep" id="prep" aria-labelledby="prep-title">
       <div class="prep-head">
         <div>
           <div class="eyebrow">出发前准备</div>
@@ -960,7 +994,7 @@
       </div>
     </section>
 
-    <section aria-labelledby="weather-title">
+    <section id="weather" aria-labelledby="weather-title">
       <div class="section-head">
         <h2 id="weather-title">目前天气趋势</h2>
         <p>截至 2026-09-24；8-15 天客观预报，只用于准备衣物和判断路线。</p>
@@ -1016,7 +1050,7 @@
       <p class="weather-source">数据参考：<a href="https://www.weather.com.cn/weather15d/101130204.shtml" target="_blank" rel="noopener">独山子</a>、<a href="https://www.weather.com.cn/weather15d/101131601.shtml" target="_blank" rel="noopener">博乐</a>、<a href="https://m.weather.com.cn/mweather15d/101131001.shtml" target="_blank" rel="noopener">伊宁</a>、<a href="https://m.weather.com.cn/mweather15d/101131006.shtml" target="_blank" rel="noopener">新源</a>、<a href="https://m.weather.com.cn/mweather15d/101130610.shtml" target="_blank" rel="noopener">巴音布鲁克</a>、<a href="https://www.weather.com.cn/weather15d/101130606.shtml" target="_blank" rel="noopener">和静</a>及<a href="https://bdmap.weather.com.cn/mweather15d/101130101.shtml" target="_blank" rel="noopener">乌鲁木齐</a>；中央气象台数据会滚动更新。</p>
     </section>
 
-    <section aria-labelledby="overview-title">
+    <section id="overview" aria-labelledby="overview-title">
       <div class="section-head">
         <h2 id="overview-title">行程总览地图</h2>
         <p>同一比例尺的新疆局部底图；深色为已确定主线，橙色为 Plan A，绿色为 Plan B。</p>
@@ -1097,7 +1131,7 @@
       </div>
     </section>
 
-    <section aria-labelledby="orders-title">
+    <section id="orders" aria-labelledby="orders-title">
       <div class="section-head">
         <h2 id="orders-title">已确认信息</h2>
         <p>只展示旅行当天需要用到的信息。</p>
@@ -1181,13 +1215,13 @@
       </div>
     </section>
 
-    <section aria-labelledby="days-title">
+    <section id="days" aria-labelledby="days-title">
       <div class="section-head">
         <h2 id="days-title">逐日行程</h2>
         <p>每天可展开路线；需要预约或还没确认的事项已标出。</p>
       </div>
 
-      <details class="day" open style="--day-color:var(--d1)">
+      <details class="day" style="--day-color:var(--d1)">
         <summary>
           <div class="day-num">D1</div>
           <div class="day-title">
@@ -1210,7 +1244,7 @@
         </div>
       </details>
 
-      <details class="day" open style="--day-color:var(--d2)">
+      <details class="day" style="--day-color:var(--d2)">
         <summary>
           <div class="day-num">D2</div>
           <div class="day-title">
@@ -1233,7 +1267,7 @@
         </div>
       </details>
 
-      <details class="day" open style="--day-color:var(--d3)">
+      <details class="day" style="--day-color:var(--d3)">
         <summary>
           <div class="day-num">D3</div>
           <div class="day-title">
@@ -1382,66 +1416,7 @@
       </details>
     </section>
 
-    <section aria-labelledby="todo-title">
-      <div class="section-head">
-        <h2 id="todo-title">待办清单</h2>
-        <p>出发前只看这张清单，完成后不用在页面里打勾。</p>
-      </div>
-      <div class="panel">
-        <ul class="todo">
-          <li>出发前复核去程、返程航班状态、值机柜台、行李额度。</li>
-          <li>10/1 抵达后到乌鲁木齐国际机场北区航站楼到达层携程租车中心取车。</li>
-          <li>10/7 早上在同一地点还车；若 D6 很早回到乌鲁木齐，可考虑 10/6 晚先还车。</li>
-          <li>D1 独山子亚朵：出发前确认停车、最晚到店、早餐。</li>
-          <li>D2 Elaine御墅民俗：出发前确认停车、最晚到店、湖区内外位置。</li>
-          <li>D3 伊宁市红旗路亚朵：出发前确认停车、早餐、洗衣。</li>
-          <li>预订 D5 巴伦台/和静/库尔勒可取消住宿，用于 Plan B。</li>
-          <li>D4 那拉提镇酒店：出发前确认停车、早餐和最晚到店。</li>
-          <li>D5 巴音布鲁克景区酒店：记录免费取消截止时间，确认停车和供暖。</li>
-          <li>D6 机场亚朵：出发前确认送机、停车、充电。</li>
-          <li>预约赛里木湖门票、自驾入园，注意车牌要求和国庆限流。</li>
-          <li>预约那拉提门票和自驾票。</li>
-          <li>预约巴音布鲁克门票，关注停止检票、区间车末班和天气。</li>
-          <li>出发前持续核对独库公路官方公告、预约、施工、天气、管制。</li>
-          <li>准备保暖外套、帽子、手套、墨镜、防晒、车载充电线、常用药。</li>
-        </ul>
-      </div>
-    </section>
-
-    <section aria-labelledby="tips-title">
-      <div class="section-head">
-        <h2 id="tips-title">实用贴士</h2>
-        <p>按路线稳定和自然风光优先来取舍。</p>
-      </div>
-      <div class="tips">
-        <article class="card">
-          <h3>D6 原则</h3>
-          <p class="meta">D6 不新增景点，只负责安全回乌鲁木齐。独库是加分项，不是必须完成的任务。</p>
-        </article>
-        <article class="card">
-          <h3>赛湖玩法</h3>
-          <p class="meta">D2 傍晚看日落，D3 上午留半天看湖色和雪山。自驾入园要提前核对预约和车牌规则。</p>
-        </article>
-        <article class="card">
-          <h3>伊宁定位</h3>
-          <p class="meta">伊宁只作为睡眠、洗衣、补给城市。少逛人文点，把体力留给那拉提、赛湖和返程。</p>
-        </article>
-        <article class="card">
-          <h3>独库判断</h3>
-          <p class="meta">官方开放、入口可进、天气稳定、司机状态好，四项同时满足才上独库北段。</p>
-        </article>
-        <article class="card">
-          <h3>国庆排队</h3>
-          <p class="meta">景区入口、服务区、加电点、热门餐厅都要预留时间。当天行程宁可少一个点。</p>
-        </article>
-        <article class="card">
-          <h3>穿衣装备</h3>
-          <p class="meta">湖边、草原、山口风冷明显。带防风保暖层、手套帽子、墨镜和车内热水。</p>
-        </article>
-      </div>
-    </section>
-
-    <section aria-labelledby="poop-title">
+    <section id="restrooms" aria-labelledby="poop-title">
       <div class="section-head">
         <h2 id="poop-title">拉屎清单</h2>
         <p>优先酒店、机场、游客中心、服务区；景区路边点只当应急。</p>
@@ -1593,6 +1568,41 @@
 
     renderCountdown();
     window.setInterval(renderCountdown, 1000);
+
+    const sectionTabs = Array.from(document.querySelectorAll(".section-tabs a"));
+    const indexedSections = sectionTabs
+      .map((tab) => document.querySelector(tab.getAttribute("href")))
+      .filter(Boolean);
+    let tabTicking = false;
+
+    function updateActiveTab() {
+      const marker = 92;
+      let active = indexedSections[0];
+      indexedSections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= marker) active = section;
+      });
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24) {
+        active = indexedSections[indexedSections.length - 1];
+      }
+      sectionTabs.forEach((tab) => {
+        const selected = tab.getAttribute("href") === `#${active.id}`;
+        if (selected) {
+          tab.setAttribute("aria-current", "true");
+          tab.scrollIntoView({ block: "nearest", inline: "nearest" });
+        } else {
+          tab.removeAttribute("aria-current");
+        }
+      });
+      tabTicking = false;
+    }
+
+    window.addEventListener("scroll", () => {
+      if (!tabTicking) {
+        window.requestAnimationFrame(updateActiveTab);
+        tabTicking = true;
+      }
+    }, { passive: true });
+    updateActiveTab();
   </script>
 </body>
 </html>
