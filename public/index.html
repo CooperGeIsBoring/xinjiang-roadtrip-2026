@@ -111,17 +111,6 @@
       font-size: 15px;
     }
 
-    .public-note {
-      flex: 0 0 auto;
-      max-width: 270px;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--paper) 90%, transparent);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
     .prep {
       padding: 16px;
       border-radius: var(--radius);
@@ -248,8 +237,7 @@
       margin-bottom: 3px;
     }
 
-    .weather-alert p,
-    .weather-source {
+    .weather-alert p {
       margin: 0;
       color: var(--muted);
       font-size: 13px;
@@ -347,10 +335,6 @@
     .weather-day.cold {
       border-color: color-mix(in srgb, #3f73b9 38%, var(--line));
       background: color-mix(in srgb, #3f73b9 8%, var(--paper));
-    }
-
-    .weather-source {
-      margin-top: 9px;
     }
 
     .focus {
@@ -834,13 +818,6 @@
       margin: 0 0 6px;
     }
 
-    footer {
-      margin: 28px 0 6px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-    }
-
     @media (max-width: 760px) {
       .page {
         padding: 12px 10px 36px;
@@ -851,11 +828,6 @@
       .split,
       .deploy {
         display: block;
-      }
-
-      .public-note {
-        margin-top: 12px;
-        max-width: none;
       }
 
       .prep-head {
@@ -912,9 +884,8 @@
     <header class="topbar">
       <div class="titleblock">
         <h1>新疆十一自驾行程</h1>
-        <p>自然风光优先，前四天固定，D5-D6 按独库情况切换。所有时间均为 Asia/Shanghai。</p>
+        <p>自然风光优先，前四天固定，D5-D6 按独库情况切换。全部时间为北京时间（UTC+8）。</p>
       </div>
-      <div class="public-note">公开页只放出行所需信息，不包含确认号、证件号、房号、二维码和付款信息。</div>
     </header>
 
     <nav class="section-tabs" aria-label="页面索引">
@@ -981,7 +952,7 @@
     <section class="focus" aria-labelledby="focus-title">
       <div class="eyebrow">此刻关注</div>
       <h2 id="focus-title">正在计算下一项行程</h2>
-      <p id="focus-detail">时间以北京时间 Asia/Shanghai 计算，跨时区打开也按当地行程时间显示。</p>
+      <p id="focus-detail">倒计时按北京时间计算。</p>
       <div class="countdown" aria-label="倒计时">
         <div class="timebox"><strong id="cd-days">--</strong><span>天</span></div>
         <div class="timebox"><strong id="cd-hours">--</strong><span>时</span></div>
@@ -1047,7 +1018,6 @@
           <p>乌鲁木齐有雨趋势；独库山口温度更低。出现雨雪、结冰或管制就走 Plan B。</p>
         </article>
       </div>
-      <p class="weather-source">数据参考：<a href="https://www.weather.com.cn/weather15d/101130204.shtml" target="_blank" rel="noopener">独山子</a>、<a href="https://www.weather.com.cn/weather15d/101131601.shtml" target="_blank" rel="noopener">博乐</a>、<a href="https://m.weather.com.cn/mweather15d/101131001.shtml" target="_blank" rel="noopener">伊宁</a>、<a href="https://m.weather.com.cn/mweather15d/101131006.shtml" target="_blank" rel="noopener">新源</a>、<a href="https://m.weather.com.cn/mweather15d/101130610.shtml" target="_blank" rel="noopener">巴音布鲁克</a>、<a href="https://www.weather.com.cn/weather15d/101130606.shtml" target="_blank" rel="noopener">和静</a>及<a href="https://bdmap.weather.com.cn/mweather15d/101130101.shtml" target="_blank" rel="noopener">乌鲁木齐</a>；中央气象台数据会滚动更新。</p>
     </section>
 
     <section id="overview" aria-labelledby="overview-title">
@@ -1143,7 +1113,7 @@
           <dl class="facts">
             <dt>时间</dt><dd><span class="badge">10:00-15:20</span></dd>
             <dt>机场</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Shanghai%20Hongqiao%20International%20Airport%20T1" target="_blank" rel="noopener">上海虹桥国际机场 T1</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=Urumqi%20Tianshan%20International%20Airport" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a></dd>
-            <dt>备注</dt><dd>公开时刻已核对；航站楼、值机柜台和当日航班状态出发前再复核。</dd>
+            <dt>备注</dt><dd>航班时间已确认；航站楼、值机柜台和当日航班状态出发前再复核。</dd>
           </dl>
         </article>
         <article class="card">
@@ -1236,7 +1206,7 @@
             <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%A4%A9%E5%B1%B1%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a> → 昌吉/石河子方向补给 → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5" target="_blank" rel="noopener">独山子亚朵</a></p>
           </div>
           <div class="timeline">
-            <div class="item"><div class="time">10:00</div><div><h4>9C6495 从上海虹桥 T1 起飞</h4><p><span class="badge">公开时刻已核对</span> 值机柜台和当日航班状态出发前复核。</p></div></div>
+            <div class="item"><div class="time">10:00</div><div><h4>9C6495 从上海虹桥 T1 起飞</h4><p><span class="badge">航班时间已确认</span> 值机柜台和当日航班状态出发前复核。</p></div></div>
             <div class="item"><div class="time">15:20</div><div><h4>抵达乌鲁木齐，取行李与取车</h4><p>前往北区航站楼到达层携程租车中心取理想 L8；取车时间从 14:00 起，落地后直接办理即可。</p></div></div>
             <div class="item"><div class="time">16:30-17:00</div><div><h4>补给后前往独山子</h4><p>买水、路餐、湿巾、垃圾袋和简单药品；今天不安排景点，把安全抵达放第一位。</p></div></div>
             <div class="item"><div class="time">20:30-21:30</div><div><h4>入住独山子亚朵</h4><p>如果航班明显延误，应改住乌鲁木齐机场附近或昌吉/石河子，不硬开夜路。</p></div></div>
@@ -1410,7 +1380,7 @@
         <div class="day-body">
           <div class="timeline">
             <div class="item"><div class="time">清晨</div><div><h4>还车和值机</h4><p>到北区航站楼到达层携程租车中心还车；返程 10:00 起飞，建议按“先还车，再值机安检”的节奏留足余量。</p></div></div>
-            <div class="item"><div class="time">10:00</div><div><h4>UQ2599 乌鲁木齐飞上海浦东</h4><p><span class="badge">公开时刻已核对</span> 到达时间 14:45；航站楼、值机柜台和行李额度出发前复核。</p></div></div>
+            <div class="item"><div class="time">10:00</div><div><h4>UQ2599 乌鲁木齐飞上海浦东</h4><p><span class="badge">航班时间已确认</span> 到达时间 14:45；航站楼、值机柜台和行李额度出发前复核。</p></div></div>
           </div>
         </div>
       </details>
@@ -1457,7 +1427,6 @@
       </div>
     </section>
 
-    <footer>行程页使用单个 HTML 文件生成，可离线打开；所有倒计时与时间均按 Asia/Shanghai 计算。</footer>
   </div>
 
   <script>
@@ -1467,55 +1436,55 @@
         title: "9C6495 上海飞乌鲁木齐",
         iso: "2026-10-01T10:00:00+08:00",
         detail: "10:00 上海虹桥 T1 起飞、15:20 抵达乌鲁木齐天山；值机柜台出发前复核。",
-        badges: ["公开航班时刻已核对", "北京时间 Asia/Shanghai"]
+        badges: ["航班时间已确认"]
       },
       {
         title: "乌鲁木齐落地后取理想 L8",
         iso: "2026-10-01T15:20:00+08:00",
         detail: "前往乌鲁木齐国际机场北区航站楼到达层携程租车中心取理想 L8。",
-        badges: ["租车已预定", "北京时间 Asia/Shanghai"]
+        badges: ["租车已预定"]
       },
       {
         title: "D1 入住独山子亚朵",
         iso: "2026-10-01T21:00:00+08:00",
         detail: "落地后长途开车，若航班延误应改住乌鲁木齐机场附近或昌吉/石河子。",
-        badges: ["住宿已预定", "北京时间 Asia/Shanghai"]
+        badges: ["住宿已预定"]
       },
       {
         title: "D2 前往赛里木湖",
         iso: "2026-10-02T09:30:00+08:00",
         detail: "独山子出发，经精河、博乐方向去赛里木湖，傍晚看湖边光线。",
-        badges: ["赛湖预约待办", "北京时间 Asia/Shanghai"]
+        badges: ["赛湖预约待办"]
       },
       {
         title: "D3 赛里木湖半天后去伊宁",
         iso: "2026-10-03T10:00:00+08:00",
         detail: "上午留给赛里木湖，午后经果子沟到伊宁休整。",
-        badges: ["自然风光优先", "北京时间 Asia/Shanghai"]
+        badges: ["自然风光优先"]
       },
       {
         title: "D4 伊宁前往那拉提/新源",
         iso: "2026-10-04T12:30:00+08:00",
         detail: "睡够后出发，主看河谷、草原和雪山背景；晚上住已预定的那拉提镇酒店。",
-        badges: ["D4 住宿已预定", "北京时间 Asia/Shanghai"]
+        badges: ["D4 住宿已预定"]
       },
       {
         title: "D5 分支判断：巴音布鲁克或东线返乌",
         iso: "2026-10-05T09:00:00+08:00",
         detail: "独库、天气、路况、体力都稳才去巴音布鲁克；否则走巴伦台/和静方向东线返乌。巴音布鲁克酒店已定、可退。",
-        badges: ["关键决策点", "北京时间 Asia/Shanghai"]
+        badges: ["关键决策点"]
       },
       {
         title: "D6 安全回乌鲁木齐机场附近",
         iso: "2026-10-06T08:00:00+08:00",
         detail: "不新增景点，天黑前回到乌鲁木齐国际机场北京北路亚朵。",
-        badges: ["D6 保守优先", "北京时间 Asia/Shanghai"]
+        badges: ["D6 保守优先"]
       },
       {
         title: "UQ2599 乌鲁木齐飞上海",
         iso: "2026-10-07T10:00:00+08:00",
         detail: "10:00 乌鲁木齐起飞、14:45 到达上海浦东；需确认提前还车和当日航班状态。",
-        badges: ["公开航班时刻已核对", "北京时间 Asia/Shanghai"]
+        badges: ["航班时间已确认"]
       }
     ];
 
