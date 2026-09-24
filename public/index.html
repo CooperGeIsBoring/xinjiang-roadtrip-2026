@@ -235,6 +235,76 @@
       margin-top: 12px;
     }
 
+    .weather-alert {
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      border-left: 5px solid var(--warn);
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--warn-bg) 58%, var(--paper));
+    }
+
+    .weather-alert strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .weather-alert p,
+    .weather-source {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .weather-day {
+      min-width: 0;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--paper) 94%, transparent);
+    }
+
+    .weather-day .date {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .weather-day h3 {
+      margin: 3px 0 2px;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .weather-day .temp {
+      display: block;
+      margin: 4px 0;
+      font-size: 22px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .weather-day p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+    }
+
+    .weather-day.cold {
+      border-color: color-mix(in srgb, #3f73b9 38%, var(--line));
+      background: color-mix(in srgb, #3f73b9 8%, var(--paper));
+    }
+
+    .weather-source {
+      margin-top: 9px;
+    }
+
     .focus {
       padding: 18px;
       border-radius: var(--radius);
@@ -775,6 +845,7 @@
 
       .grid,
       .prep-grid,
+      .weather-grid,
       .poop-list,
       .tips {
         grid-template-columns: 1fr;
@@ -826,18 +897,14 @@
         <div>
           <div class="eyebrow">出发前准备</div>
           <h2 id="prep-title">现在还差这些</h2>
-          <p>先锁住宿和预约，再处理临行复核。D4/D5 定下来后，整条路线就会稳很多。</p>
+          <p>主线住宿已经锁定；现在集中处理景区预约、Plan B 备用住宿和临行复核。</p>
         </div>
-        <div class="prep-count"><strong>7</strong>项待办</div>
+        <div class="prep-count"><strong>6</strong>项待办</div>
       </div>
       <div class="prep-grid">
         <div class="prep-item">
           <span class="tag">必须</span>
-          <div><strong>D4 那拉提/新源住宿</strong><p>10/4 晚，优先可取消、停车方便、靠近第二天出发方向。</p></div>
-        </div>
-        <div class="prep-item">
-          <span class="tag">必须</span>
-          <div><strong>D5 双备选住宿</strong><p>巴音布鲁克用于 Plan A；巴伦台/和静/库尔勒用于 Plan B，最好都可取消。</p></div>
+          <div><strong>D5 Plan B 备用住宿</strong><p>巴伦台/和静/库尔勒方向仍未定；建议订一间可免费取消的保底房。</p></div>
         </div>
         <div class="prep-item">
           <span class="tag soft">预约</span>
@@ -861,7 +928,7 @@
         </div>
         <div class="prep-item">
           <span class="tag ok">已定</span>
-          <div><strong>主骨架已锁定</strong><p>航班、租车、D1/D2/D3/D6 住宿已定，剩下是把分支风险收窄。</p></div>
+          <div><strong>Plan A 主骨架已锁定</strong><p>航班、租车及 Plan A 沿线 D1-D6 住宿已定；D5 巴音布鲁克酒店可退。</p></div>
         </div>
       </div>
       <div class="done-strip" aria-label="已完成事项">
@@ -871,6 +938,8 @@
         <span class="badge">D1 独山子亚朵</span>
         <span class="badge">D2 Elaine御墅民俗</span>
         <span class="badge">D3 伊宁亚朵</span>
+        <span class="badge">D4 那拉提镇酒店</span>
+        <span class="badge">D5 巴音布鲁克景区酒店（可退）</span>
         <span class="badge">D6 机场亚朵</span>
       </div>
     </section>
@@ -889,6 +958,62 @@
         <span class="badge">航班时刻已核对</span>
         <span class="badge">租车已预定</span>
       </div>
+    </section>
+
+    <section aria-labelledby="weather-title">
+      <div class="section-head">
+        <h2 id="weather-title">目前天气趋势</h2>
+        <p>截至 2026-09-24；8-15 天客观预报，只用于准备衣物和判断路线。</p>
+      </div>
+      <div class="weather-alert">
+        <strong>先按“降温 + 雨雪可能”准备</strong>
+        <p>10/4 那拉提有雨趋势；10/5 巴音布鲁克约 7/-6℃，D6 高海拔山口存在积雪、结冰和临时管制风险。D4 晚、D5 早、D6 早各复核一次官方预报和独库公告。</p>
+      </div>
+      <div class="weather-grid">
+        <article class="weather-day">
+          <span class="date">10/1 · D1</span>
+          <h3>独山子</h3>
+          <span class="temp">22 / 11℃</span>
+          <p>有雨趋势。落地后长途驾驶，防雨外套放在随身包，不要压箱底。</p>
+        </article>
+        <article class="weather-day cold">
+          <span class="date">10/2 · D2</span>
+          <h3>博乐 / 赛湖周边</h3>
+          <span class="temp">17 / 6℃</span>
+          <p>雨。赛里木湖海拔更高、湖风更冷，体感可能明显低于城市预报。</p>
+        </article>
+        <article class="weather-day">
+          <span class="date">10/3 · D3</span>
+          <h3>伊宁</h3>
+          <span class="temp">21 / 7℃</span>
+          <p>阴转雨。上午赛湖继续按防风保暖穿，进伊宁后再减衣。</p>
+        </article>
+        <article class="weather-day">
+          <span class="date">10/4 · D4</span>
+          <h3>新源 / 那拉提</h3>
+          <span class="temp">18 / 5℃</span>
+          <p>阴转雨。草原和山谷能见度可能下降，景区玩法以短线、可撤退为主。</p>
+        </article>
+        <article class="weather-day cold">
+          <span class="date">10/5 · Plan A</span>
+          <h3>巴音布鲁克</h3>
+          <span class="temp">7 / -6℃</span>
+          <p>当前趋势为晴，但夜间低于冰点。羽绒/厚外套、帽子、手套和防滑鞋必须随车。</p>
+        </article>
+        <article class="weather-day">
+          <span class="date">10/5 · Plan B</span>
+          <h3>和静</h3>
+          <span class="temp">16 / 2℃</span>
+          <p>多云。比巴音布鲁克温和，但巴伦台沿线和清晨仍可能接近冰点。</p>
+        </article>
+        <article class="weather-day cold">
+          <span class="date">10/6 · D6</span>
+          <h3>返乌日</h3>
+          <span class="temp">乌市 9 / 1℃</span>
+          <p>乌鲁木齐有雨趋势；独库山口温度更低。出现雨雪、结冰或管制就走 Plan B。</p>
+        </article>
+      </div>
+      <p class="weather-source">数据参考：<a href="https://www.weather.com.cn/weather15d/101130204.shtml" target="_blank" rel="noopener">独山子</a>、<a href="https://www.weather.com.cn/weather15d/101131601.shtml" target="_blank" rel="noopener">博乐</a>、<a href="https://m.weather.com.cn/mweather15d/101131001.shtml" target="_blank" rel="noopener">伊宁</a>、<a href="https://m.weather.com.cn/mweather15d/101131006.shtml" target="_blank" rel="noopener">新源</a>、<a href="https://m.weather.com.cn/mweather15d/101130610.shtml" target="_blank" rel="noopener">巴音布鲁克</a>、<a href="https://www.weather.com.cn/weather15d/101130606.shtml" target="_blank" rel="noopener">和静</a>及<a href="https://bdmap.weather.com.cn/mweather15d/101130101.shtml" target="_blank" rel="noopener">乌鲁木齐</a>；中央气象台数据会滚动更新。</p>
     </section>
 
     <section aria-labelledby="overview-title">
@@ -945,13 +1070,13 @@
           <text x="126.9" y="247.4" class="map-label" style="font-weight:900">伊宁</text>
           <text x="126.9" y="267.4" class="map-small">已定：D3 红旗路亚朵</text>
 
-          <circle class="node" cx="278.7" cy="294.6" r="5.2"/>
-          <text x="286.7" y="314.6" class="map-label">那拉提/新源</text>
-          <text x="286.7" y="334.6" class="map-small">D4 住宿待订</text>
+          <circle class="confirmed-node" cx="278.7" cy="294.6" r="6"/>
+          <text x="286.7" y="314.6" class="map-label" style="font-weight:900">那拉提镇</text>
+          <text x="286.7" y="334.6" class="map-small">已定：D4 那拉提镇酒店</text>
 
           <circle class="plan-a-node" cx="353.1" cy="327.9" r="6"/>
           <text x="362.1" y="345.9" class="map-label" style="font-weight:900">巴音布鲁克</text>
-          <text x="362.1" y="365.9" class="map-small">Plan A D5 待订</text>
+          <text x="362.1" y="365.9" class="map-small">已定可退：D5 景区酒店</text>
 
           <circle class="node" cx="343.8" cy="222.5" r="4.8"/>
           <text x="353.8" y="213.5" class="map-label">乔尔玛</text>
@@ -965,7 +1090,7 @@
           <text x="549.3" y="430.6" class="map-label">和静</text>
         </svg>
         <div class="legend">
-          <span><i class="swatch" style="background:var(--fixed-route)"></i>已确定主线：机场、独山子、赛湖、伊宁</span>
+          <span><i class="swatch" style="background:var(--fixed-route)"></i>已确定主线：机场、独山子、赛湖、伊宁、那拉提</span>
           <span><i class="swatch" style="background:var(--d5a)"></i>Plan A：巴音布鲁克 + 独库北段</span>
           <span><i class="swatch" style="background:var(--d5b)"></i>Plan B：巴伦台/和静东线返乌</span>
         </div>
@@ -1027,6 +1152,22 @@
           <dl class="facts">
             <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5" target="_blank" rel="noopener">伊宁市红旗路亚朵</a></dd>
             <dt>重点</dt><dd>停车、早餐、洗衣；伊宁只做恢复城市。</dd>
+          </dl>
+        </article>
+        <article class="card">
+          <h3>D4 那拉提镇住宿</h3>
+          <p class="meta">2026-10-04 至 2026-10-05，已预定</p>
+          <dl class="facts">
+            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%82%A3%E6%8B%89%E6%8F%90%E9%95%87" target="_blank" rel="noopener">那拉提镇</a></dd>
+            <dt>重点</dt><dd>酒店名称待补；出发前确认停车、早餐和最晚到店。</dd>
+          </dl>
+        </article>
+        <article class="card">
+          <h3>D5 巴音布鲁克景区住宿</h3>
+          <p class="meta">2026-10-05 至 2026-10-06，已预定，可退</p>
+          <dl class="facts">
+            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B7%B4%E9%9F%B3%E5%B8%83%E9%B2%81%E5%85%8B%E6%99%AF%E5%8C%BA" target="_blank" rel="noopener">巴音布鲁克景区</a></dd>
+            <dt>重点</dt><dd>作为 Plan A 房源保留；确认免费取消截止时间、停车和供暖。</dd>
           </dl>
         </article>
         <article class="card">
@@ -1118,20 +1259,20 @@
         <summary>
           <div class="day-num">D4</div>
           <div class="day-title">
-            <h3>10/4 伊宁 → 那拉提/新源</h3>
-            <p>住宿待定；预计驾驶 3-4.5 小时，主看河谷、草原和雪山背景。</p>
+            <h3>10/4 伊宁 → 那拉提镇</h3>
+            <p><strong>已定：那拉提镇酒店。</strong> 预计驾驶 3-4.5 小时，主看河谷、草原和雪山背景。</p>
           </div>
           <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;destination=Nalati%20Tourist%20Scenic%20Area&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
         </summary>
         <div class="day-body">
           <div class="mini-map">
             <h4>当日路线</h4>
-            <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BC%8A%E5%AE%81" target="_blank" rel="noopener">伊宁</a> → 河谷路段 → <a href="https://www.google.com/maps/search/?api=1&amp;query=Nalati%20Tourist%20Scenic%20Area" target="_blank" rel="noopener">那拉提</a> / <a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%96%B0%E6%BA%90%E5%8E%BF" target="_blank" rel="noopener">新源</a></p>
+            <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BC%8A%E5%AE%81" target="_blank" rel="noopener">伊宁</a> → 河谷路段 → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%82%A3%E6%8B%89%E6%8F%90%E9%95%87" target="_blank" rel="noopener">那拉提镇</a></p>
           </div>
           <div class="timeline">
             <div class="item"><div class="time">上午</div><div><h4>伊宁恢复半天</h4><p>睡够、早餐、整理车内补给。人文街区不做主线，只在状态好时顺路轻逛。</p></div></div>
-            <div class="item"><div class="time">中午后</div><div><h4>出发去那拉提/新源</h4><p>沿途看伊犁河谷和远山，不追景区项目打满。</p></div></div>
-            <div class="item"><div class="time">下午</div><div><h4>那拉提周边自然风光</h4><p><span class="badge reserve">那拉提自驾票需核对</span> <span class="badge warn">D4 酒店待预定</span> 建议优先停车方便、可取消、离第二天分支路线近。</p></div></div>
+            <div class="item"><div class="time">中午后</div><div><h4>出发去那拉提镇</h4><p>沿途看伊犁河谷和远山，不追景区项目打满。</p></div></div>
+            <div class="item"><div class="time">下午</div><div><h4>那拉提周边自然风光</h4><p><span class="badge reserve">那拉提自驾票需核对</span> <span class="badge">D4 酒店已预定</span> 当前有雨趋势，优先短线、可随时撤回镇上的玩法。</p></div></div>
           </div>
         </div>
       </details>
@@ -1141,7 +1282,7 @@
           <h3>Plan A：独库开放，去巴音布鲁克</h3>
           <p class="meta">D5 走自然加强线，D6 经乔尔玛和独库北段回乌鲁木齐。风景更完整，但 D6 明显更硬。</p>
           <div class="badges">
-            <span class="badge warn">D5 巴音布鲁克住宿待订</span>
+            <span class="badge">D5 巴音布鲁克住宿已定、可退</span>
             <span class="badge warn">独库通行当天核验</span>
             <span class="badge reserve">巴音布鲁克门票待预约</span>
           </div>
@@ -1161,8 +1302,8 @@
         <summary>
           <div class="day-num">D5A</div>
           <div class="day-title">
-            <h3>10/5 那拉提/新源 → 巴音布鲁克</h3>
-            <p>Plan A；预计驾驶 2.5-4 小时，傍晚看九曲十八弯。</p>
+            <h3>10/5 那拉提镇 → 巴音布鲁克</h3>
+            <p><strong>已定：巴音布鲁克景区酒店，可退。</strong> Plan A 预计驾驶 2.5-4 小时。</p>
           </div>
           <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Nalati%20Tourist%20Scenic%20Area&amp;destination=Bayanbulak%20Grassland&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
         </summary>
@@ -1172,9 +1313,9 @@
             <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Nalati%20Tourist%20Scenic%20Area" target="_blank" rel="noopener">那拉提/新源</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=Bayanbulak%20Grassland" target="_blank" rel="noopener">巴音布鲁克</a></p>
           </div>
           <div class="timeline">
-            <div class="item"><div class="time">上午</div><div><h4>只在条件稳定时启动 Plan A</h4><p>独库通行、天气、住宿和司机状态四项都稳，再去巴音布鲁克。</p></div></div>
+            <div class="item"><div class="time">上午</div><div><h4>只在条件稳定时启动 Plan A</h4><p>独库通行、天气、道路状况和司机状态四项都稳，再去巴音布鲁克。</p></div></div>
             <div class="item"><div class="time">下午</div><div><h4>进入巴音布鲁克草原</h4><p><span class="badge reserve">门票/区间车待预约</span> 重点看草原湿地和开阔地貌，不再加远点。</p></div></div>
-            <div class="item"><div class="time">傍晚</div><div><h4>九曲十八弯日落</h4><p><span class="badge warn">D5 住宿待订</span> 日落玩法受天气、停止检票和区间车末班影响大。</p></div></div>
+            <div class="item"><div class="time">傍晚</div><div><h4>九曲十八弯日落</h4><p><span class="badge">D5 景区酒店已定、可退</span> 日落玩法受天气、停止检票和区间车末班影响大；当前夜间低于冰点。</p></div></div>
           </div>
         </div>
       </details>
@@ -1254,9 +1395,9 @@
           <li>D1 独山子亚朵：出发前确认停车、最晚到店、早餐。</li>
           <li>D2 Elaine御墅民俗：出发前确认停车、最晚到店、湖区内外位置。</li>
           <li>D3 伊宁市红旗路亚朵：出发前确认停车、早餐、洗衣。</li>
-          <li>预订 D4 那拉提/新源酒店，优先可取消、停车方便。</li>
-          <li>预订 D5 巴音布鲁克可取消住宿，用于 Plan A。</li>
           <li>预订 D5 巴伦台/和静/库尔勒可取消住宿，用于 Plan B。</li>
+          <li>D4 那拉提镇酒店：出发前确认停车、早餐和最晚到店。</li>
+          <li>D5 巴音布鲁克景区酒店：记录免费取消截止时间，确认停车和供暖。</li>
           <li>D6 机场亚朵：出发前确认送机、停车、充电。</li>
           <li>预约赛里木湖门票、自驾入园，注意车牌要求和国庆限流。</li>
           <li>预约那拉提门票和自驾票。</li>
@@ -1380,13 +1521,13 @@
       {
         title: "D4 伊宁前往那拉提/新源",
         iso: "2026-10-04T12:30:00+08:00",
-        detail: "睡够后出发，主看河谷、草原和雪山背景；D4 酒店待定。",
-        badges: ["D4 住宿待订", "北京时间 Asia/Shanghai"]
+        detail: "睡够后出发，主看河谷、草原和雪山背景；晚上住已预定的那拉提镇酒店。",
+        badges: ["D4 住宿已预定", "北京时间 Asia/Shanghai"]
       },
       {
         title: "D5 分支判断：巴音布鲁克或东线返乌",
         iso: "2026-10-05T09:00:00+08:00",
-        detail: "独库、天气、住宿、体力都稳才去巴音布鲁克；否则走巴伦台/和静方向东线返乌。",
+        detail: "独库、天气、路况、体力都稳才去巴音布鲁克；否则走巴伦台/和静方向东线返乌。巴音布鲁克酒店已定、可退。",
         badges: ["关键决策点", "北京时间 Asia/Shanghai"]
       },
       {
