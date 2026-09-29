@@ -937,6 +937,54 @@
       details.day summary { padding: 11px; gap: 8px; }
       .day-alerts { margin-left: -46px; }
     }
+    #prep { margin-top: 8px; padding: 10px 0 12px; border-bottom: 1px solid var(--line); }
+    #prep .section-head { margin: 0 2px 5px; }
+    #prep .section-head h2 { font-size: 18px; }
+    #prep .section-head p { font-size: 12px; }
+    #prep .booking-todo { font-size: 13px; line-height: 1.5; }
+    #prep .booking-todo li { padding: 4px 0; border: 0; }
+    .drive-metrics {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 8px;
+      padding: 9px 10px;
+      margin: 9px 0 4px;
+      border-left: 3px solid var(--day-color, var(--accent));
+      background: color-mix(in srgb, var(--day-color, var(--accent)) 16%, var(--paper));
+    }
+    .drive-metrics span { display: block; color: var(--muted); font-size: 11px; }
+    .drive-metrics strong { display: block; font-size: 20px; font-weight: 800; line-height: 1.45; }
+    .drive-metrics small { font-size: 12px; font-weight: 500; }
+    .day-title .drive-scope { font-size: 12px; margin: 3px 0 7px; }
+    .drive-option { margin-top: 9px; }
+    .drive-option > b { font-size: 13px; }
+    .drive-option .drive-metrics { margin-top: 3px; }
+    .choice-heading { margin: 24px 2px 8px; }
+    .choice-heading h3 { font-size: 20px; margin: 0; }
+    .choice-heading p { font-size: 13px; color: var(--muted); margin: 4px 0; }
+    .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: start; }
+    .choice-grid .choice-day { min-width: 0; margin: 0; }
+    .choice-grid .choice-day summary { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
+    .choice-label { color: var(--ink); font-size: 13px; font-weight: 800; }
+    .choice-grid .day-title { width: 100%; min-width: 0; }
+    .choice-grid .day-title h3 { font-size: 18px; }
+    .choice-grid .day-alerts { margin-left: 0; }
+    .choice-grid .route-button { width: 100%; min-width: 0; }
+    .choice-grid .day-title p { font-size: 13px; }
+    .choice-grid .branch-next { padding: 7px 0; border-bottom: 1px solid var(--line); }
+    @media (max-width: 760px) {
+      .choice-grid { gap: 8px; }
+      .choice-grid .choice-day summary { padding: 10px 8px; border-left-width: 3px; }
+      .choice-grid .day-title h3 { font-size: 16px; }
+      .choice-grid .drive-metrics { grid-template-columns: 1fr; padding: 7px; gap: 6px; }
+      .choice-grid .drive-metrics strong { font-size: 18px; }
+      .choice-grid .day-alerts li { padding: 5px; font-size: 12px; }
+      .choice-grid .day-body { padding: 10px 8px; }
+      .choice-grid .item { display: block; }
+      .choice-grid .item h4 { font-size: 14px; }
+      .choice-grid .item p, .choice-grid .mini-map p { font-size: 13px; }
+      .choice-grid .badge { font-size: 12px; padding: 4px 6px; }
+    }
   </style>
 </head>
 <body>
@@ -949,14 +997,23 @@
     </header>
 
     <nav class="section-tabs" aria-label="页面索引">
-      <a href="#days" aria-current="true">行程</a>
+      <a href="#prep" aria-current="true">预约</a>
+      <a href="#days">行程</a>
       <a href="#weather">天气</a>
       <a href="#overview">地图</a>
-      <a href="#prep">待办</a>
       <a href="#restrooms">厕所</a>
       <a href="#orders">预订</a>
     </nav>
 
+
+    <section id="prep" aria-labelledby="prep-title">
+      <div class="section-head"><h2 id="prep-title">剩余预约</h2><p>车牌已拿到 · 票务完成状态待确认</p></div>
+      <ul class="booking-todo">
+        <li><strong>赛湖 10/2：</strong>“赛里木湖旅游”查自驾入园名额；同时核对 10/3 再次入园规则。</li>
+        <li><strong>那拉提 10/4：</strong>“智游那拉提”查票；按实际到达时间选入园时段。</li>
+        <li><strong>仅 Plan A：</strong>“巴音布鲁克旅游”查 10/5 门票；北段 10/6 预约重点从 9/30 查看，按那拉提入口及到达时间选时段。</li>
+      </ul>
+    </section>
 
     <section class="focus" aria-labelledby="focus-title">
       <div class="eyebrow">此刻关注</div>
@@ -977,16 +1034,18 @@
     <section id="days" aria-labelledby="days-title">
       <div class="section-head">
         <h2 id="days-title">每日路书</h2>
-        <p>北京时间 · 车程为规划估算，含休息排队的预算另列。</p>
+        <p>里程与驾驶时间为规划估算，非实时导航；休息排队预算另列。</p>
       </div>
       <p class="route-priority"><strong>目前优先 Plan B：</strong>10/5 住和静，10/6 经乌尉高速返乌。独库实时放行未核实，雨雪风险与堵车提示按 9/29 核查信息整理。</p>
 
       <details class="day" style="--day-color:var(--d1)">
         <summary>
           <div class="day-num">D1</div>
-          <div class="day-title">
+<div class="day-title">
             <h3>10/1 上海 → 乌鲁木齐 → 独山子</h3>
-            <p><strong>住：独山子亚朵，已定。</strong> 驾驶约 3-4 小时；含休息及缓行预留 4-5.5 小时。</p>
+            <div class="drive-metrics"><div><span>预计里程</span><strong>240–280<small> km</small></strong></div><div><span>预计驾驶</span><strong>3–4 小时</strong></div></div>
+            <p class="drive-scope">机场至酒店；不含取车</p>
+            <p><strong>住：独山子亚朵，已定。</strong> 含休息及缓行预留 4–5.5 小时。</p>
             <p class="departure">16:30-17:00 取车补给后出发</p>
             <ul class="day-alerts"><li>易堵｜G30 乌奎段 17:00-21:00；晚到不赶路。</li><li class="cold-note">天气｜独山子多云 13–24℃；当晚注意疲劳。</li></ul>
           </div>
@@ -1009,9 +1068,11 @@
       <details class="day" style="--day-color:var(--d2)">
         <summary>
           <div class="day-num">D2</div>
-          <div class="day-title">
+<div class="day-title">
             <h3>10/2 独山子 → 赛里木湖</h3>
-            <p><strong>住：Elaine御墅民俗，已定。</strong> 按现有精河、博乐方向路线，至赛湖入口驾驶约 5-6 小时；含补给及入口等待预留 6-8 小时，湖内行车另算。</p>
+            <div class="drive-metrics"><div><span>预计里程</span><strong>380–450<small> km</small></strong></div><div><span>预计驾驶</span><strong>5–6 小时</strong></div></div>
+            <p class="drive-scope">经精河、博乐方向；不含湖内行车</p>
+            <p><strong>住：Elaine御墅民俗，已定。</strong> 含补给及入口等待预留 6–8 小时。</p>
             <p class="departure">08:30-09:00 出发</p>
             <ul class="day-alerts"><li>易堵｜赛湖入口、服务区；湖内行车另算。</li><li class="cold-note">雨雪｜10/2 赛湖 1–8℃，小雨转雨夹雪。</li></ul>
           </div>
@@ -1034,9 +1095,11 @@
       <details class="day" style="--day-color:var(--d3)">
         <summary>
           <div class="day-num">D3</div>
-          <div class="day-title">
+<div class="day-title">
             <h3>10/3 赛里木湖半天 → 果子沟 → 伊宁</h3>
-            <p><strong>住：伊宁市红旗路亚朵，已定。</strong> 出湖后至伊宁约 2.5-3.5 小时；湖内自驾另计约 1-2 小时。转场含缓冲预留 3.5-5 小时。</p>
+            <div class="drive-metrics"><div><span>预计里程</span><strong>150–190<small> km</small></strong></div><div><span>预计驾驶</span><strong>2.5–3.5 小时</strong></div></div>
+            <p class="drive-scope">出湖至伊宁；湖区半天另计</p>
+            <p><strong>住：伊宁市红旗路亚朵，已定。</strong> 转场含缓冲预留 3.5–5 小时；湖内驾驶另约 1–2 小时。</p>
             <p class="departure">上午留半天湖区，午后出湖</p>
             <ul class="day-alerts"><li>易堵｜赛果山区道路及果子沟停车点。</li><li class="cold-note">低温｜赛湖 -2–11℃；出发前查结冰，伊宁 8–26℃。</li></ul>
           </div>
@@ -1058,9 +1121,11 @@
       <details class="day" style="--day-color:var(--d4)">
         <summary>
           <div class="day-num">D4</div>
-          <div class="day-title">
+<div class="day-title">
             <h3>10/4 伊宁 → 那拉提镇</h3>
-            <p><strong>住：那拉提镇酒店，已定。</strong> 驾驶约 3.5-4.5 小时；含补给及缓行预留 5-6 小时，景区行车另算。</p>
+            <div class="drive-metrics"><div><span>预计里程</span><strong>250–290<small> km</small></strong></div><div><span>预计驾驶</span><strong>3.5–4.5 小时</strong></div></div>
+            <p class="drive-scope">伊宁至那拉提镇；景区行车另计</p>
+            <p><strong>住：那拉提镇酒店，已定。</strong> 含补给及缓行预留 5–6 小时。</p>
             <p class="departure">08:30-09:00 离开伊宁</p>
             <ul class="day-alerts"><li>易堵｜S12 新源段 10:00-17:00；下午入园别晚出发。</li><li class="cold-note">天气｜县城参考多云 12–30℃，不代表草原温度。</li></ul>
           </div>
@@ -1079,34 +1144,18 @@
         </div>
       </details>
 
-      <div class="split" aria-label="D5 路线选择">
-        <article class="card branch" style="--branch-color:var(--d5a)">
-          <h3>Plan A：独库开放，去巴音布鲁克</h3>
-          <p class="meta">D5 去巴音布鲁克，D6 经那拉提、乔尔玛、独库北段返乌。D6 驾驶约 8-10 小时，含缓冲可能 10-12 小时以上；雨雪趋势下不作为默认方案。</p>
-          <div class="badges">
-            <span class="badge">D5 巴音布鲁克住宿已定、可退</span>
-            <span class="badge warn">北段 10/6 预约从 9/30 查看</span>
-            <span class="badge reserve">巴音布鲁克门票待预约</span>
-          </div>
-        </article>
-        <article class="card branch" style="--branch-color:var(--d5b)">
-          <h3>Plan B：避开独库，和静返乌</h3>
-          <p class="meta">D5 经 G218、巴伦台到和静，仍有山路和施工等待；D6 经 G0711 乌尉高速返乌。前一天多留转场时间，返程日相对轻松；两段都须确认通行。</p>
-          <div class="badges">
-            <span class="badge">D5 和静镇住宿已定</span>
-            <span class="badge">少走回头路</span>
-            <span class="badge">当前优先</span>
-          </div>
-        </article>
-      </div>
-
-      <details class="day" style="--day-color:var(--d5a)">
+      <div class="choice-heading"><h3>10/5 · D5 路线二选一</h3><p>同从那拉提镇出发 · 两地住宿均已预定</p></div>
+      <div class="choice-grid" aria-label="D5 两条备选路线">
+      <details class="day choice-day" style="--day-color:var(--d5a)">
         <summary>
-          <div class="day-num">D5A</div>
-          <div class="day-title">
-            <h3>10/5 那拉提镇 → 巴音布鲁克</h3>
-            <p><strong>住：巴音布鲁克景区酒店，已定可退。</strong> 驾驶约 2.5-3.5 小时；含休息及放行等待预留 3.5-5 小时，景区交通另算。</p>
-            <p class="departure">上午核验中段及 D6 返程条件</p>
+          <div class="choice-label">PLAN A · 景观线</div>
+<div class="day-title">
+            <h3>去巴音布鲁克</h3>
+            <div class="drive-metrics"><div><span>预计里程</span><strong>80–110<small> km</small></strong></div><div><span>预计驾驶</span><strong>2.5–3.5 小时</strong></div></div>
+            <p class="drive-scope">独库中段；景区交通另计</p>
+            <p><strong>住：巴音景区酒店</strong>已定、可退。含缓冲预留 3.5–5 小时。</p>
+            <p class="branch-next">次日：经独库返乌，驾驶 8-10 小时。</p>
+            <p class="departure">出发前核验两天通行条件</p>
             <ul class="day-alerts"><li>易堵｜独库施工、入口放行；景区交通另留时间。</li><li class="cold-note">雨雪｜巴音 0–18℃、多云转雨夹雪；D6 雨雪风险更高。</li></ul>
           </div>
           <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Nalati%20Tourist%20Scenic%20Area&amp;destination=Bayanbulak%20Grassland&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
@@ -1123,14 +1172,16 @@
           </div>
         </div>
       </details>
-
-      <details class="day" style="--day-color:var(--d5b)">
+      <details class="day choice-day" style="--day-color:var(--d5b)">
         <summary>
-          <div class="day-num">D5B</div>
-          <div class="day-title">
-            <h3>10/5 那拉提镇 → 巴伦台 → 和静镇</h3>
-            <p><strong>住：和静镇酒店，已定。</strong> 驾驶约 6-7 小时；含吃饭、休息及施工缓行预留 7.5-9 小时，严重拥堵可能更长。</p>
-            <p class="departure">08:30-09:00 出发，上午不安排景区</p>
+          <div class="choice-label">PLAN B · 当前优先</div>
+<div class="day-title">
+            <h3>经巴伦台去和静</h3>
+            <div class="drive-metrics"><div><span>预计里程</span><strong>300–340<small> km</small></strong></div><div><span>预计驾驶</span><strong>6–7 小时</strong></div></div>
+            <p class="drive-scope">G218 山路及施工路段</p>
+            <p><strong>住：和静镇酒店</strong>已定。含缓冲预留 7.5–9 小时，严重堵车更长。</p>
+            <p class="branch-next">次日：经乌尉高速返乌，驾驶 3-4 小时。</p>
+            <p class="departure">08:30-09:00 出发</p>
             <ul class="day-alerts"><li>易堵｜G218 那拉提—巩乃斯 8:00-21:00；全天转场。</li><li class="cold-note">天气｜和静参考阴 10–22℃；山口雨雪和管制另核。</li></ul>
           </div>
           <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Nalati%20Tourist%20Scenic%20Area&amp;destination=%E5%92%8C%E9%9D%99%E5%8E%BF&amp;waypoints=%E5%B7%B4%E4%BC%A6%E5%8F%B0&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
@@ -1138,7 +1189,7 @@
         <div class="day-body">
           <div class="mini-map">
             <h4>当日路线</h4>
-            <p>那拉提镇慢玩 → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B7%B4%E4%BC%A6%E5%8F%B0" target="_blank" rel="noopener">巴伦台</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%92%8C%E9%9D%99%E9%95%87" target="_blank" rel="noopener">和静镇</a></p>
+            <p>那拉提镇 → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B7%B4%E4%BC%A6%E5%8F%B0" target="_blank" rel="noopener">巴伦台</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%92%8C%E9%9D%99%E9%95%87" target="_blank" rel="noopener">和静镇</a></p>
           </div>
           <div class="timeline">
             <div class="item"><div class="time">08:30-09:00</div><div><h4>早餐、补能后出发</h4><p>取消上午景区慢玩，全天留给 G218 转场。国庆指南提示那拉提至巩乃斯 8:00-21:00 易堵。</p></div></div>
@@ -1147,13 +1198,16 @@
           </div>
         </div>
       </details>
+      </div>
 
       <details class="day" style="--day-color:var(--d6)">
         <summary>
           <div class="day-num">D6</div>
-          <div class="day-title">
+<div class="day-title">
             <h3>10/6 回乌鲁木齐机场附近</h3>
-            <p><strong>住：机场北京北路亚朵，已定。</strong> A 驾驶约 8-10 小时，含缓冲 10-12 小时以上；B 经乌尉高速约 3-4 小时，含缓冲 4-5.5 小时。</p>
+            <div class="drive-option"><b>A · 经独库</b><div class="drive-metrics"><div><span>预计里程</span><strong>550–620<small> km</small></strong></div><div><span>预计驾驶</span><strong>8–10 小时</strong></div></div></div><div class="drive-option"><b>B · 经乌尉高速</b><div class="drive-metrics"><div><span>预计里程</span><strong>220–300<small> km</small></strong></div><div><span>预计驾驶</span><strong>3–4 小时</strong></div></div></div>
+            <p class="drive-scope">两条路线均至机场附近酒店</p>
+            <p><strong>住：机场北京北路亚朵，已定。</strong> 含缓冲：A 预留 10–12 小时以上；B 预留 4–5.5 小时。</p>
             <p class="departure">B 建议 09:00 出发；A 按放行及预约出发</p>
             <ul class="day-alerts"><li>易堵｜B 乌尉高速 10:00-13:00、15:00-19:00；A 独库全天易堵。</li><li class="cold-note">雨雪｜巴音 -3–10℃雨转雪；乌市 4–13℃雨转阴、大风。</li></ul>
           </div>
@@ -1175,9 +1229,11 @@
       <details class="day" style="--day-color:var(--d7)">
         <summary>
           <div class="day-num">D7</div>
-          <div class="day-title">
+<div class="day-title">
             <h3>10/7 乌鲁木齐 → 上海</h3>
-            <p><strong>已定：UQ2599 10:00-14:45。</strong> 酒店至还车点驾驶暂按 20-40 分钟，含还车及步行预留 1-1.5 小时，值机安检另留时间。</p>
+            <div class="drive-metrics"><div><span>预计里程</span><strong>10–25<small> km</small></strong></div><div><span>预计驾驶</span><strong>20–40 分钟</strong></div></div>
+            <p class="drive-scope">酒店至还车点暂估，出发前导航核准</p>
+            <p><strong>UQ2599 10:00 起飞。</strong> 含还车步行预留 1–1.5 小时，值机安检另留时间。</p>
             <p class="departure">建议 06:30-07:00 出发还车，10:00 起飞</p>
             <ul class="day-alerts"><li>衔接｜还车、步行、值机安检分别留时，勿按 14:00 还车截止倒推。</li><li class="cold-note">低温｜乌鲁木齐多云 2–10℃；厚外套留在手边。</li></ul>
           </div>
@@ -1344,14 +1400,6 @@
     </section>
 
 
-    <section id="prep" aria-labelledby="prep-title">
-      <div class="section-head"><h2 id="prep-title">剩余预约</h2><p>车牌已拿到 · 票务完成状态待确认</p></div>
-      <ul class="booking-todo">
-        <li><strong>赛湖 10/2：</strong>“赛里木湖旅游”查自驾入园名额；同时核对 10/3 再次入园规则。</li>
-        <li><strong>那拉提 10/4：</strong>“智游那拉提”查票；按实际到达时间选入园时段。</li>
-        <li><strong>仅 Plan A：</strong>“巴音布鲁克旅游”查 10/5 门票；北段 10/6 预约重点从 9/30 查看，按那拉提入口及到达时间选时段。</li>
-      </ul>
-    </section>
 
     <section id="restrooms" aria-labelledby="poop-title">
       <div class="section-head">
