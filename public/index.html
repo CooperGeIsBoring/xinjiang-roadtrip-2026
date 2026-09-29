@@ -5,1156 +5,192 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>新疆自驾路书</title>
   <style>
-    :root {
-      color-scheme: light dark;
-      --bg: #f7f3ea;
-      --paper: #fffaf0;
-      --paper-strong: #fff4d9;
-      --ink: #1f2a24;
-      --muted: #667168;
-      --line: #ded4bf;
-      --accent: #2d7c6f;
-      --accent-2: #b4652a;
-      --warn: #b8442e;
-      --warn-bg: #ffe5dc;
-      --ok: #2f7651;
-      --ok-bg: #dff1e7;
-      --shadow: 0 14px 38px rgba(53, 45, 30, 0.12);
-      --radius: 8px;
-      --d1: #b95f2f;
-      --d2: #2d7c6f;
-      --d3: #3f73b9;
-      --d4: #65813d;
-      --d5a: #9b4e32;
-      --d5b: #2f7651;
-      --d6: #6f5aa7;
-      --d7: #46525b;
-      --fixed-route: #243126;
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
-    }
+:root {
+  color-scheme: light dark;
+  --bg:#f7f9f8; --paper:#fff; --ink:#23302b; --muted:#67736d;
+  --line:#dce3df; --accent:#276c58; --accent-2:#946443;
+  --warn:#a74737; --warn-bg:#fbefeb; --ok:#28704f; --ok-bg:#edf5f0;
+  --d1:#8b6d52; --d2:#346e69; --d3:#587c9a; --d4:#657c47;
+  --d5a:#ac603f; --d5b:#28745c; --d6:#676481; --d7:#5e6870;
+  --fixed-route:#394b42; --radius:6px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+@media(prefers-color-scheme:dark) {
+  :root { --bg:#171a19; --paper:#1e2220; --ink:#e7ece9; --muted:#a6b2ab; --line:#39423d;
+    --accent:#88c6ad; --accent-2:#d5aa83; --warn:#eea091; --warn-bg:#382720;
+    --ok:#96c5a9; --ok-bg:#23342a; --d5a:#db926e; --d5b:#82bd9c; --fixed-route:#bccfc3; }
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font); font-size:14px; line-height:1.6; letter-spacing:0; }
+a { color:inherit; text-decoration-color:var(--line); text-underline-offset:3px; }
+a:hover { color:var(--accent); }
+button,summary,a { -webkit-tap-highlight-color:transparent; }
+button { font:inherit; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+.page { max-width:980px; margin:auto; padding:24px 20px 48px; }
+.topbar { padding-bottom:12px; }
+h1,h2,h3,h4,p { overflow-wrap:break-word; }
+.titleblock h1 { margin:0; font-size:28px; line-height:1.25; }
+.titleblock p { margin:7px 0 0; color:var(--muted); font-size:13px; }
+.section-tabs { position:sticky; top:0; z-index:20; display:flex; gap:18px; padding:8px 0; background:var(--bg); border-bottom:1px solid var(--line); overflow-x:auto; scrollbar-width:none; }
+.section-tabs::-webkit-scrollbar { display:none; }
+.section-tabs a { flex:none; padding:5px 2px; min-height:36px; text-decoration:none; border-bottom:2px solid transparent; color:var(--muted); font-weight:650; }
+.section-tabs a[aria-current="true"] { color:var(--accent); border-color:var(--accent); }
+.page > section { margin-top:22px; scroll-margin-top:72px; }
+.section-head { display:flex; justify-content:space-between; align-items:end; gap:12px; margin:0 0 12px; }
+.section-head h2 { margin:0; font-size:21px; line-height:1.35; }
+.section-head p { color:var(--muted); font-size:12px; margin:0; }
+#prep { margin-top:12px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+#prep h2 { font-size:16px; }
+#prep .section-head { margin-bottom:5px; }
+.booking-todo { margin:0; padding-left:18px; font-size:12px; }
+.booking-todo li { padding:3px 0; }
+.focus { padding:0 0 14px; border-bottom:1px solid var(--line); }
+.eyebrow { font-size:11px; font-weight:700; color:var(--muted); }
+.focus h2 { font-size:18px; margin:3px 0; }
+.focus p { font-size:12px; color:var(--muted); margin:0; }
+.focus .badges { display:none; }
+.countdown { display:flex; gap:12px; margin-top:6px; }
+.timebox strong { font-size:20px; font-variant-numeric:tabular-nums; }
+.timebox span { font-size:11px; color:var(--muted); padding-left:3px; }
+.route-priority { padding-left:10px; margin:0 0 10px; border-left:2px solid var(--d5b); color:var(--muted); font-size:12px; }
+.route-priority strong { color:var(--accent); }
+details.day { margin:0; border:0; border-bottom:1px solid var(--line); }
+details.day > summary { display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; padding:17px 0; cursor:pointer; list-style:none; }
+details.day > summary::-webkit-details-marker,.branch-stage > summary::-webkit-details-marker { display:none; }
+.day-num { color:var(--accent); font-size:18px; font-weight:800; padding-top:1px; }
+.day-title { min-width:0; }
+.day-title h3 { margin:0; font-size:17px; line-height:1.45; }
+.day-title h3::after,.branch-stage summary>h4::after { content:''; display:inline-block; width:6px; height:6px; margin:0 0 3px 10px; border:solid var(--muted); border-width:0 1.5px 1.5px 0; transform:rotate(45deg); }
+details[open] > summary .day-title h3::after,.branch-stage[open]>summary>h4::after { transform:rotate(225deg); margin-bottom:0; }
+.trip-stat { margin:6px 0 2px; line-height:1.55; font-size:14px; }
+.trip-stat strong { font-weight:750; }
+.trip-stat span { color:var(--muted); font-size:12px; display:inline-block; }
+.stay-line { color:var(--muted); font-size:12px; margin:3px 0; }
+.risk-brief { font-size:12px; color:var(--warn); margin:3px 0 0; }
+.day-body { padding:0 0 16px 50px; }
+.detail-facts { margin:10px 0 14px; font-size:13px; }
+.drive-scope { margin:4px 0; color:var(--muted); font-size:12px; }
+.departure { font-weight:700; margin:4px 0; }
+.day-alerts { list-style:none; padding:0; margin:5px 0; }
+.day-alerts li { margin:4px 0; color:var(--muted); font-size:12px; }
+.stage-navigation { padding:10px 0; border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); }
+.stage-navigation h4 { margin:0 0 5px; font-size:13px; }
+.stage-navigation ol { margin:0; padding-left:20px; }
+.stage-navigation a { color:var(--accent); }
+.stage-navigation li { padding:4px 0; }
+.nav-note { font-size:12px; color:var(--muted); margin:5px 0 0; }
+.mini-map { margin:12px 0; }
+.mini-map h4 { margin:0; font-size:13px; }
+.mini-map p { color:var(--muted); font-size:13px; margin:3px 0; }
+.timeline { display:grid; gap:10px; }
+.item { display:grid; grid-template-columns:85px minmax(0,1fr); gap:10px; }
+.time { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.item h4 { margin:0; font-size:14px; }
+.item p { margin:3px 0 0; color:var(--muted); font-size:13px; }
+.badge { display:inline; color:var(--ok); font-size:12px; font-weight:600; }
+.badge.warn { color:var(--warn); }
+.badge.reserve { color:var(--accent-2); }
+.badges { display:flex; flex-wrap:wrap; gap:8px; }
+.branch-flow { margin:22px 0 8px; }
+.branch-decision { text-align:center; padding:8px 0; }
+.branch-decision span { display:block; font-size:11px; color:var(--muted); }
+.branch-decision strong { display:block; font-size:15px; }
+.branch-decision p { margin:2px 0; font-size:12px; color:var(--muted); }
+.branch-fork { height:25px; width:50%; margin:0 auto 12px; position:relative; border-bottom:1px solid var(--line); }
+.branch-fork::before { content:''; position:absolute; height:25px; left:50%; border-left:1px solid var(--line); }
+.branch-fork::after { content:''; position:absolute; inset:25px 0 -9px; border-left:1px solid var(--line); border-right:1px solid var(--line); }
+.choice-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+.branch-lane { min-width:0; margin:0; border-top:3px solid var(--branch-color); }
+@supports (grid-template-rows:subgrid) {
+ .choice-grid { grid-template-rows:auto auto auto auto; row-gap:0; align-items:stretch; }
+ .branch-lane { display:grid; grid-template-rows:subgrid; grid-row:span 4; }
+}
+.branch-head { padding:12px 0; border-bottom:1px solid var(--line); min-height:99px; }
+.branch-head span { font-size:11px; color:var(--branch-color); font-weight:750; }
+.branch-head h3 { font-size:18px; margin:2px 0; }
+.branch-head p { font-size:12px; margin:0; color:var(--muted); }
+.branch-stage { margin:0; }
+.branch-stage > summary { cursor:pointer; list-style:none; padding:13px 0; }
+.stage-day { font-size:11px; color:var(--branch-color); font-weight:750; }
+.branch-stage summary>h4 { font-size:16px; line-height:1.4; margin:3px 0 6px; }
+.branch-stage .day-body { padding:0 0 12px; }
+.branch-stage .item { grid-template-columns:1fr; gap:2px; }
+.branch-stage .trip-stat strong { font-size:14px; }
+.flow-arrow { padding:3px 0 6px; display:flex; flex-direction:column; align-items:center; color:var(--branch-color); }
+.flow-arrow span { font-size:11px; }
+.flow-arrow b { font-size:22px; font-weight:400; line-height:1; }
+.branch-merge { margin-top:18px; padding:10px 0 15px; text-align:center; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.branch-merge span { display:block; font-size:11px; color:var(--muted); }
+.branch-merge strong { font-size:15px; }
+.branch-merge p { margin:0; font-size:12px; color:var(--muted); }
+.weather-alert { padding:10px 0; border-top:1px solid var(--line); }
+.weather-alert strong { font-size:14px; }
+.weather-alert p { font-size:12px; margin:4px 0; color:var(--muted); }
+.weather-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.weather-day { border-top:1px solid var(--line); padding:10px 0; min-width:0; }
+.weather-day .date { color:var(--muted); font-size:11px; }
+.weather-day h3 { font-size:14px; margin:3px 0; }
+.weather-day .temp { display:block; font-size:20px; font-weight:750; }
+.weather-day p { margin:3px 0; font-size:12px; color:var(--muted); }
+.panel { padding:12px 0; }
+.panel.risk { border-top:1px solid var(--line); }
+.meta { font-size:13px; color:var(--muted); margin:0; }
+.map-tabs { display:flex; gap:20px; border-bottom:1px solid var(--line); }
+.map-tabs button { background:none; color:var(--muted); padding:10px 4px; min-height:44px; border:0; border-bottom:3px solid transparent; cursor:pointer; }
+.map-tabs button[aria-selected=true] { color:var(--ink); border-color:var(--d5b); font-weight:750; }
+.map-tabs button[data-plan=a][aria-selected=true] { border-color:var(--d5a); }
+.route-map { display:block; width:100%; height:auto; background:var(--paper); border-radius:6px; }
+.map-label { font-family:var(--font); font-size:16px; fill:var(--ink); paint-order:stroke; stroke:var(--paper); stroke-width:4px; stroke-linejoin:round; }
+.map-small { font-size:12px; fill:var(--muted); }
+.route-path { fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.route-path.fixed { stroke:var(--fixed-route); stroke-width:4; }
+.route-path.plan-a { stroke:var(--d5a); stroke-width:4; }
+.route-path.plan-b { stroke:var(--d5b); stroke-width:4; }
+.route-shadow { fill:none; stroke:var(--paper); stroke-width:7; }
+.xinjiang-shape { fill:color-mix(in srgb,var(--accent) 7%,var(--paper)); stroke:var(--line); stroke-width:1; opacity:.6; }
+.node { fill:var(--paper); stroke:var(--ink); stroke-width:1.5; }
+.confirmed-node { fill:var(--fixed-route); stroke:var(--paper); stroke-width:2; }
+.plan-a-node { fill:var(--d5a); stroke:var(--paper); stroke-width:2; }
+.plan-b-node { fill:var(--d5b); stroke:var(--paper); stroke-width:2; }
+[data-map-plan=a] [data-map-route=b], [data-map-plan=b] [data-map-route=a] { display:none; }
+.legend { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:10px; font-size:12px; color:var(--muted); }
+.legend span { display:inline-flex; align-items:center; gap:7px; }
+.swatch { width:16px; height:3px; display:inline-block; }
+.map-itinerary { color:var(--muted); font-size:13px; min-height:42px; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.card { padding:12px; background:var(--paper); border:1px solid var(--line); border-radius:6px; min-width:0; }
+.card h3 { font-size:16px; margin:0 0 6px; }
+.facts { display:grid; grid-template-columns:50px minmax(0,1fr); gap:6px 10px; margin:9px 0 0; font-size:13px; }
+.facts dt { color:var(--muted); }.facts dd { margin:0; }
+.order-archive { border-top:1px solid var(--line); }
+.order-archive>summary { padding:14px 0; cursor:pointer; font-size:18px; font-weight:700; }
+.order-archive>summary span { color:var(--muted); font-weight:400; font-size:12px; }
+.poop-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 20px; }
+.poop-list .card { border:0; border-bottom:1px solid var(--line); padding:10px 0; background:none; border-radius:0; }
+.poop-list h3 { font-size:14px; }.poop-list p { font-size:12px; }
+@media(max-width:760px) {
+ .page { padding:16px 14px 32px; }
+ .section-tabs { gap:16px; }
+ .section-head { display:block; }
+ .section-head p { margin-top:4px; }
+ .day-title h3 { font-size:16px; }
+ .day-body { padding-left:0; }
+ .choice-grid { gap:18px; }
+ .branch-stage summary>h4 { font-size:14px; }
+ .branch-head h3 { font-size:17px; }
+ .branch-stage .trip-stat span { display:block; }
+ .branch-stage .trip-stat strong { font-size:13px; }
+ .branch-stage .risk-brief,.branch-stage .stay-line { font-size:12px; }
+ .weather-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .grid,.poop-list { grid-template-columns:1fr; }
+ .item { grid-template-columns:70px minmax(0,1fr); }
+ .branch-stage .item { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #111611;
-        --paper: #1b211b;
-        --paper-strong: #252b20;
-        --ink: #f3efe3;
-        --muted: #b9c0b5;
-        --line: #3d463a;
-        --accent: #7ccbbd;
-        --accent-2: #e5a46a;
-        --warn: #ff9a82;
-        --warn-bg: #46251f;
-        --ok: #8bd5a6;
-        --ok-bg: #1e3928;
-        --shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
-        --fixed-route: #f3efe3;
-      }
-    }
 
-    * { box-sizing: border-box; }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top left, rgba(45, 124, 111, 0.13), transparent 32rem),
-        linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 82%, #ffffff 18%));
-      color: var(--ink);
-      font-family: var(--font);
-      font-size: 16px;
-      line-height: 1.58;
-      letter-spacing: 0;
-    }
-
-    a {
-      color: inherit;
-      text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent);
-      text-underline-offset: 3px;
-    }
-
-    a:focus-visible,
-    button:focus-visible,
-    summary:focus-visible {
-      outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
-      outline-offset: 3px;
-    }
-
-    .page {
-      width: min(100%, 980px);
-      margin: 0 auto;
-      padding: 18px 14px 48px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 8px 2px 16px;
-    }
-
-    .titleblock h1 {
-      margin: 0;
-      font-size: clamp(32px, 8vw, 54px);
-      line-height: 1.06;
-      letter-spacing: 0;
-    }
-
-    .titleblock p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .prep {
-      padding: 16px;
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--paper) 92%, var(--warn-bg) 8%);
-      border: 1px solid color-mix(in srgb, var(--warn) 22%, var(--line));
-      box-shadow: var(--shadow);
-    }
-
-    .prep-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-
-    .prep-head h2 {
-      margin: 3px 0 2px;
-      font-size: clamp(24px, 6vw, 38px);
-      line-height: 1.14;
-    }
-
-    .prep-head p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .prep-count {
-      flex: 0 0 auto;
-      min-width: 92px;
-      padding: 10px 12px;
-      border-radius: var(--radius);
-      background: var(--warn-bg);
-      color: var(--warn);
-      border: 1px solid color-mix(in srgb, var(--warn) 32%, transparent);
-      text-align: center;
-      font-weight: 900;
-    }
-
-    .prep-count strong {
-      display: block;
-      font-size: 28px;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .prep-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .prep-item {
-      display: grid;
-      grid-template-columns: 78px minmax(0, 1fr);
-      gap: 10px;
-      align-items: start;
-      min-width: 0;
-      padding: 11px;
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--paper) 88%, transparent);
-      border: 1px solid var(--line);
-    }
-
-    .prep-item strong {
-      display: block;
-      margin-bottom: 2px;
-      font-size: 15px;
-      line-height: 1.28;
-    }
-
-    .prep-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .tag {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 28px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-      color: var(--warn);
-      background: var(--warn-bg);
-      border: 1px solid color-mix(in srgb, var(--warn) 26%, transparent);
-      white-space: nowrap;
-    }
-
-    .tag.soft {
-      color: var(--accent-2);
-      background: color-mix(in srgb, var(--accent-2) 13%, var(--paper));
-      border-color: color-mix(in srgb, var(--accent-2) 25%, transparent);
-    }
-
-    .tag.ok {
-      color: var(--ok);
-      background: var(--ok-bg);
-      border-color: color-mix(in srgb, var(--ok) 28%, transparent);
-    }
-
-    .done-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .weather-alert {
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      border-left: 5px solid var(--warn);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--warn-bg) 58%, var(--paper));
-    }
-
-    .weather-alert strong {
-      display: block;
-      margin-bottom: 3px;
-    }
-
-    .weather-alert p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .section-tabs {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display: flex;
-      gap: 6px;
-      margin: 0 -4px 14px;
-      padding: 8px 4px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      background: color-mix(in srgb, var(--bg) 86%, transparent);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .section-tabs::-webkit-scrollbar {
-      display: none;
-    }
-
-    .section-tabs a {
-      flex: 0 0 auto;
-      min-height: 38px;
-      padding: 7px 13px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      background: color-mix(in srgb, var(--paper) 94%, transparent);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .section-tabs a[aria-current="true"] {
-      color: var(--paper);
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
-    #prep,
-    #weather,
-    #overview,
-    #orders,
-    #days,
-    #restrooms {
-      scroll-margin-top: 68px;
-    }
-
-    .weather-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .weather-day {
-      min-width: 0;
-      padding: 11px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--paper) 94%, transparent);
-    }
-
-    .weather-day .date {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .weather-day h3 {
-      margin: 3px 0 2px;
-      font-size: 15px;
-      line-height: 1.25;
-    }
-
-    .weather-day .temp {
-      display: block;
-      margin: 4px 0;
-      font-size: 22px;
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .weather-day p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.42;
-    }
-
-    .weather-day.cold {
-      border-color: color-mix(in srgb, #3f73b9 38%, var(--line));
-      background: color-mix(in srgb, #3f73b9 8%, var(--paper));
-    }
-
-    .focus {
-      padding: 18px;
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, var(--paper), var(--paper-strong));
-      box-shadow: var(--shadow);
-      border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
-    }
-
-    .eyebrow {
-      color: var(--accent-2);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .focus h2 {
-      margin: 6px 0 4px;
-      font-size: clamp(24px, 6vw, 42px);
-      line-height: 1.15;
-    }
-
-    .focus p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .timebox {
-      min-width: 0;
-      padding: 12px 8px;
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--accent) 12%, var(--paper));
-      text-align: center;
-      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-    }
-
-    .timebox strong {
-      display: block;
-      font-size: clamp(28px, 9vw, 52px);
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .timebox span {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--ok);
-      background: var(--ok-bg);
-      border: 1px solid color-mix(in srgb, var(--ok) 30%, transparent);
-    }
-
-    .badge.warn,
-    .needs-confirm {
-      color: var(--warn);
-      background: var(--warn-bg);
-      border-color: color-mix(in srgb, var(--warn) 35%, transparent);
-    }
-
-    .badge.reserve {
-      color: var(--accent-2);
-      background: color-mix(in srgb, var(--accent-2) 14%, var(--paper));
-      border-color: color-mix(in srgb, var(--accent-2) 30%, transparent);
-    }
-
-    section {
-      margin-top: 18px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 14px;
-      margin: 28px 2px 10px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1.2;
-    }
-
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      text-align: right;
-    }
-
-    .panel,
-    .card,
-    details.day {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--paper) 94%, transparent);
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.04);
-    }
-
-    .panel {
-      padding: 14px;
-    }
-
-    .map-wrap {
-      overflow: hidden;
-    }
-
-    .route-map {
-      display: block;
-      width: 100%;
-      height: auto;
-      min-height: 430px;
-      background:
-        radial-gradient(circle at 80% 15%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 13rem),
-        linear-gradient(135deg, color-mix(in srgb, var(--paper) 82%, #ffffff 18%), color-mix(in srgb, var(--paper) 91%, #b9d6ca 9%));
-      border-radius: var(--radius);
-    }
-
-    .map-label {
-      font-family: var(--font);
-      font-size: 16px;
-      fill: var(--ink);
-      paint-order: stroke;
-      stroke: color-mix(in srgb, var(--paper) 90%, transparent);
-      stroke-width: 5px;
-      stroke-linejoin: round;
-    }
-
-    .map-small {
-      font-size: 12px;
-      fill: var(--muted);
-    }
-
-    .route-path {
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.92;
-    }
-
-    .route-path.fixed {
-      stroke: var(--fixed-route);
-      stroke-width: 7;
-      opacity: 0.96;
-    }
-
-    .route-path.plan-a {
-      stroke: var(--d5a);
-      stroke-width: 5.5;
-      opacity: 0.96;
-    }
-
-    .route-path.plan-b {
-      stroke: var(--d5b);
-      stroke-width: 5.5;
-      opacity: 0.96;
-    }
-
-    .route-path.alt-hint {
-      stroke-width: 3.5;
-      stroke-dasharray: 12 10;
-      opacity: 0.62;
-    }
-
-    .route-shadow {
-      fill: none;
-      stroke: color-mix(in srgb, var(--paper) 72%, #000 28%);
-      stroke-width: 13;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.16;
-    }
-
-    .xinjiang-shape {
-      fill: color-mix(in srgb, var(--accent) 14%, var(--paper));
-      stroke: color-mix(in srgb, var(--accent) 28%, var(--line));
-      stroke-width: 2;
-      opacity: 0.46;
-    }
-
-    .xinjiang-ridge {
-      fill: none;
-      stroke: color-mix(in srgb, var(--accent-2) 22%, transparent);
-      stroke-width: 1.4;
-      stroke-linecap: round;
-      opacity: 0.72;
-    }
-
-    .node {
-      fill: var(--paper);
-      stroke: var(--ink);
-      stroke-width: 1.8;
-    }
-
-    .night {
-      fill: var(--accent-2);
-      stroke: var(--paper);
-      stroke-width: 2;
-    }
-
-    .confirmed-node {
-      fill: var(--fixed-route);
-      stroke: var(--paper);
-      stroke-width: 2;
-    }
-
-    .confirmed-label {
-      font-weight: 900;
-    }
-
-    .plan-a-node {
-      fill: var(--d5a);
-      stroke: var(--paper);
-      stroke-width: 2;
-    }
-
-    .plan-b-node {
-      fill: var(--d5b);
-      stroke: var(--paper);
-      stroke-width: 2;
-    }
-
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .legend span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .swatch {
-      width: 18px;
-      height: 5px;
-      border-radius: 99px;
-      background: var(--accent);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .card {
-      padding: 13px;
-      min-width: 0;
-    }
-
-    .card h3 {
-      margin: 0 0 7px;
-      font-size: 18px;
-      line-height: 1.25;
-    }
-
-    .meta {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .facts {
-      display: grid;
-      grid-template-columns: 76px minmax(0, 1fr);
-      gap: 6px 10px;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .facts dt {
-      color: var(--muted);
-    }
-
-    .facts dd {
-      margin: 0;
-      min-width: 0;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    details.day {
-      margin-top: 10px;
-      overflow: hidden;
-    }
-
-    details.day summary {
-      cursor: pointer;
-      list-style: none;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr) auto;
-      gap: 10px;
-      align-items: center;
-      padding: 14px;
-      border-left: 8px solid var(--day-color, var(--accent));
-      background: color-mix(in srgb, var(--day-color, #2d7c6f) 10%, var(--paper));
-    }
-
-    details.day summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .day-num {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: var(--day-color, var(--accent));
-      font-weight: 900;
-      font-size: 15px;
-    }
-
-    .day-title h3 {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.25;
-    }
-
-    .day-title p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .route-button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      min-width: 94px;
-      min-height: 38px;
-      padding: 7px 11px;
-      border-radius: var(--radius);
-      border: 1px solid color-mix(in srgb, var(--day-color, var(--accent)) 45%, var(--line));
-      color: var(--ink);
-      background: color-mix(in srgb, var(--day-color, var(--accent)) 12%, var(--paper));
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .day-body {
-      padding: 14px;
-    }
-
-    .mini-map {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 10px;
-      margin-bottom: 12px;
-      background: color-mix(in srgb, var(--paper) 85%, var(--day-color, var(--accent)) 7%);
-    }
-
-    .mini-map h4 {
-      margin: 0 0 6px;
-      font-size: 14px;
-    }
-
-    .mini-map p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .timeline {
-      display: grid;
-      gap: 9px;
-    }
-
-    .item {
-      display: grid;
-      grid-template-columns: 86px minmax(0, 1fr);
-      gap: 10px;
-      padding-bottom: 9px;
-      border-bottom: 1px dashed color-mix(in srgb, var(--line) 75%, transparent);
-    }
-
-    .item:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .time {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-      padding-top: 2px;
-    }
-
-    .item h4 {
-      margin: 0 0 3px;
-      font-size: 16px;
-      line-height: 1.35;
-    }
-
-    .item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .branch {
-      border-left: 5px solid var(--branch-color, var(--accent));
-    }
-
-    .poop-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .poop-list .card {
-      padding: 10px;
-    }
-
-    .poop-list h3 {
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
-
-    .poop-list p {
-      font-size: 13px;
-      line-height: 1.42;
-    }
-
-    .risk {
-      border-left: 5px solid var(--warn);
-      background: color-mix(in srgb, var(--warn-bg) 55%, var(--paper));
-    }
-
-    .deploy {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .deploy ol {
-      margin: 8px 0 0;
-      padding-left: 21px;
-    }
-
-    .deploy li {
-      margin: 0 0 6px;
-    }
-
-    @media (max-width: 760px) {
-      .page {
-        padding: 12px 10px 36px;
-      }
-
-      .topbar,
-      .section-head,
-      .split,
-      .deploy {
-        display: block;
-      }
-
-      .prep-head {
-        display: block;
-      }
-
-      .prep-count {
-        display: inline-block;
-        margin-top: 10px;
-      }
-
-      .section-head p {
-        margin-top: 4px;
-        text-align: left;
-      }
-
-      .grid,
-      .prep-grid,
-      .weather-grid,
-      .poop-list {
-        grid-template-columns: 1fr;
-      }
-
-      .countdown {
-        gap: 6px;
-      }
-
-      .timebox {
-        padding: 10px 4px;
-      }
-
-      .route-map {
-        min-height: 350px;
-      }
-
-      details.day summary {
-        grid-template-columns: auto minmax(0, 1fr);
-      }
-
-      .route-button {
-        grid-column: 1 / -1;
-        justify-self: stretch;
-      }
-
-      .item {
-        grid-template-columns: 68px minmax(0, 1fr);
-      }
-
-    }
-    .titleblock h1 { font-size: 30px; }
-    .focus {
-      padding: 10px 2px 14px;
-      border: 0;
-      border-bottom: 1px solid var(--line);
-      border-radius: 0;
-      box-shadow: none;
-      background: none;
-    }
-    .focus h2 { font-size: 20px; }
-    .focus p { font-size: 13px; }
-    .focus .badges { display: none; }
-    .countdown { display: flex; gap: 12px; margin-top: 10px; }
-    .timebox { padding: 0; border: 0; background: none; }
-    .timebox strong { display: inline; font-size: 22px; }
-    .timebox span { display: inline; margin-left: 3px; font-size: 12px; }
-    .route-priority {
-      margin: 0 0 12px;
-      padding: 10px 12px;
-      border-left: 3px solid var(--ok);
-      background: var(--ok-bg);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-    .day-title .departure { color: var(--ink); font-weight: 700; margin-top: 8px; }
-    .day-alerts { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 5px; }
-    .day-alerts li {
-      padding: 5px 8px;
-      border-left: 2px solid var(--accent-2);
-      color: var(--ink);
-      background: color-mix(in srgb, var(--accent-2) 9%, var(--paper));
-      font-size: 13px;
-      font-weight: 400;
-      line-height: 1.5;
-    }
-    .day-alerts .cold-note { border-color: #52819d; background: color-mix(in srgb, #52819d 10%, var(--paper)); }
-    details.day summary { align-items: start; border-left-width: 4px; }
-    .day-title h3::after {
-      content: '';
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      margin: 0 0 3px 10px;
-      border: solid currentColor;
-      border-width: 0 1.5px 1.5px 0;
-      transform: rotate(45deg);
-    }
-    details.day[open] .day-title h3::after { transform: rotate(225deg); margin-bottom: 0; }
-    .split { margin-top: 14px; }
-    .booking-todo { margin: 0; padding-left: 21px; font-size: 14px; }
-    .booking-todo li { padding: 7px 0; border-bottom: 1px solid var(--line); }
-    .order-archive { border-top: 1px solid var(--line); }
-    .order-archive > summary { padding: 16px 0; cursor: pointer; font-size: 19px; font-weight: 700; }
-    .order-archive > summary span { display: inline-block; font-weight: 400; font-size: 13px; color: var(--muted); }
-    @media (max-width: 760px) {
-      .split .card + .card { margin-top: 10px; }
-      .day-num { width: 38px; height: 38px; font-size: 13px; }
-      details.day summary { padding: 11px; gap: 8px; }
-      .day-alerts { margin-left: -46px; }
-    }
-    #prep { margin-top: 8px; padding: 10px 0 12px; border-bottom: 1px solid var(--line); }
-    #prep .section-head { margin: 0 2px 5px; }
-    #prep .section-head h2 { font-size: 18px; }
-    #prep .section-head p { font-size: 12px; }
-    #prep .booking-todo { font-size: 13px; line-height: 1.5; }
-    #prep .booking-todo li { padding: 4px 0; border: 0; }
-    .drive-metrics {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 8px;
-      padding: 9px 10px;
-      margin: 9px 0 4px;
-      border-left: 3px solid var(--day-color, var(--accent));
-      background: color-mix(in srgb, var(--day-color, var(--accent)) 16%, var(--paper));
-    }
-    .drive-metrics span { display: block; color: var(--muted); font-size: 11px; }
-    .drive-metrics strong { display: block; font-size: 20px; font-weight: 800; line-height: 1.45; }
-    .drive-metrics small { font-size: 12px; font-weight: 500; }
-    .drive-metrics em {
-      display: block;
-      margin-top: 2px;
-      color: var(--warn);
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 800;
-    }
-    .day-title .drive-scope { font-size: 12px; margin: 3px 0 7px; }
-    .drive-option { margin-top: 9px; }
-    .drive-option > b { font-size: 13px; }
-    .drive-option .drive-metrics { margin-top: 3px; }
-    .choice-heading { margin: 24px 2px 8px; }
-    .choice-heading h3 { font-size: 20px; margin: 0; }
-    .choice-heading p { font-size: 13px; color: var(--muted); margin: 4px 0; }
-    .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: start; }
-    .choice-grid .choice-day { min-width: 0; margin: 0; }
-    .choice-grid .choice-day summary { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
-    .choice-label { color: var(--ink); font-size: 13px; font-weight: 800; }
-    .choice-grid .day-title { width: 100%; min-width: 0; }
-    .choice-grid .day-title h3 { font-size: 18px; }
-    .choice-grid .day-alerts { margin-left: 0; }
-    .choice-grid .route-button { width: 100%; min-width: 0; }
-    .choice-grid .day-title p { font-size: 13px; }
-    .choice-grid .branch-next { padding: 7px 0; border-bottom: 1px solid var(--line); }
-    .branch-flow {
-      margin-top: 24px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--paper) 95%, transparent);
-      overflow: hidden;
-    }
-    .branch-decision {
-      width: min(100%, 480px);
-      margin: 0 auto;
-      padding: 10px 14px;
-      border: 1px solid color-mix(in srgb, var(--accent-2) 38%, var(--line));
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--accent-2) 10%, var(--paper));
-      text-align: center;
-    }
-    .branch-decision span,
-    .branch-decision strong,
-    .branch-merge span,
-    .branch-merge strong {
-      display: block;
-    }
-    .branch-decision span,
-    .branch-merge span {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-    }
-    .branch-decision strong { margin-top: 2px; font-size: 17px; }
-    .branch-decision p,
-    .branch-merge p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
-    .branch-fork {
-      position: relative;
-      height: 30px;
-      margin: 0 12.5%;
-      border-bottom: 2px solid var(--line);
-    }
-    .branch-fork::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0;
-      height: 30px;
-      border-left: 2px solid var(--line);
-    }
-    .branch-fork::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -8px;
-      height: 8px;
-      border-left: 2px solid var(--line);
-      border-right: 2px solid var(--line);
-    }
-    .branch-flow .choice-grid { margin-top: 8px; }
-    .branch-lane {
-      min-width: 0;
-      padding: 10px;
-      border: 1px solid color-mix(in srgb, var(--branch-color) 38%, var(--line));
-      border-top: 5px solid var(--branch-color);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--branch-color) 5%, var(--paper));
-    }
-    .branch-lane.recommended {
-      box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--d5b) 24%, transparent);
-    }
-    .branch-head { min-height: 96px; padding: 2px 2px 10px; text-align: center; }
-    .branch-head span {
-      color: var(--branch-color);
-      font-size: 12px;
-      font-weight: 900;
-    }
-    .branch-head h3 { margin: 3px 0; font-size: 21px; }
-    .branch-head p { margin: 0; color: var(--muted); font-size: 13px; }
-    .branch-stage {
-      margin: 0;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--paper) 94%, transparent);
-      overflow: hidden;
-    }
-    .branch-stage summary {
-      cursor: pointer;
-      list-style: none;
-      padding: 11px;
-    }
-    .branch-stage summary::-webkit-details-marker { display: none; }
-    .branch-stage .stage-day {
-      display: block;
-      color: var(--branch-color);
-      font-size: 12px;
-      font-weight: 900;
-    }
-    .branch-stage summary > h4 {
-      margin: 3px 0 0;
-      font-size: 17px;
-      line-height: 1.35;
-    }
-    .branch-stage summary > h4::after {
-      content: '';
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      margin: 0 0 3px 8px;
-      border: solid currentColor;
-      border-width: 0 1.5px 1.5px 0;
-      transform: rotate(45deg);
-    }
-    .branch-stage[open] summary > h4::after { transform: rotate(225deg); margin-bottom: 0; }
-    .branch-stage summary > p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
-    .branch-stage .departure { color: var(--ink); font-weight: 800; }
-    .branch-stage .day-alerts { margin-left: 0; }
-    .branch-stage .route-button { width: 100%; margin-top: 9px; }
-    .branch-stage .day-body { padding: 10px; border-top: 1px solid var(--line); }
-    .flow-arrow {
-      display: grid;
-      place-items: center;
-      min-height: 54px;
-      color: var(--branch-color);
-    }
-    .flow-arrow span { font-size: 11px; font-weight: 800; }
-    .flow-arrow b { font-size: 24px; line-height: 1; }
-    .branch-merge {
-      position: relative;
-      width: min(100%, 520px);
-      margin: 36px auto 0;
-      padding: 11px 14px;
-      border: 1px solid color-mix(in srgb, var(--d6) 38%, var(--line));
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--d6) 9%, var(--paper));
-      text-align: center;
-    }
-    .branch-merge::before {
-      content: '';
-      position: absolute;
-      left: 25%;
-      right: 25%;
-      top: -28px;
-      height: 26px;
-      border-top: 2px solid var(--line);
-      border-left: 2px solid var(--line);
-      border-right: 2px solid var(--line);
-    }
-    .branch-merge strong { margin-top: 2px; font-size: 16px; }
-    @media (max-width: 760px) {
-      .choice-grid { gap: 8px; }
-      .choice-grid .choice-day summary { padding: 10px 8px; border-left-width: 3px; }
-      .choice-grid .day-title h3 { font-size: 16px; }
-      .choice-grid .drive-metrics { grid-template-columns: 1fr; padding: 7px; gap: 6px; }
-      .choice-grid .drive-metrics strong { font-size: 18px; }
-      .choice-grid .day-alerts li { padding: 5px; font-size: 12px; }
-      .choice-grid .day-body { padding: 10px 8px; }
-      .choice-grid .item { display: block; }
-      .choice-grid .item h4 { font-size: 14px; }
-      .choice-grid .item p, .choice-grid .mini-map p { font-size: 13px; }
-      .choice-grid .badge { font-size: 12px; padding: 4px 6px; }
-      .branch-flow { margin-left: -2px; margin-right: -2px; padding: 10px 6px; }
-      .branch-decision { padding: 9px 8px; }
-      .branch-decision strong { font-size: 15px; }
-      .branch-fork { margin: 0 11%; }
-      .branch-lane { padding: 6px; }
-      .branch-head { min-height: 90px; padding: 2px 0 8px; }
-      .branch-head h3 { font-size: 17px; }
-      .branch-head p { font-size: 12px; }
-      .branch-stage summary { padding: 8px 6px; }
-      .branch-stage summary > h4 { font-size: 14px; }
-      .branch-stage .drive-metrics { grid-template-columns: 1fr; }
-      .branch-stage .day-alerts li { padding: 5px; font-size: 11px; }
-      .branch-stage summary > p { font-size: 12px; }
-      .branch-stage .route-button { min-height: 34px; font-size: 12px; }
-      .branch-merge { margin-top: 34px; padding: 10px 8px; }
-      .branch-merge strong { font-size: 14px; }
-    }
   </style>
 </head>
 <body>
@@ -1213,18 +249,18 @@
           <div class="day-num">D1</div>
 <div class="day-title">
             <h3>10/1 上海 → 乌鲁木齐 → 独山子</h3>
-            <div class="drive-metrics"><div><span>预计里程</span><strong>约 260<small> km</small></strong></div><div><span>预计驾驶</span><strong>3.5 小时</strong><em>拥堵缓行按 6 小时</em></div></div>
-            <p class="drive-scope">机场至酒店；不含取车</p>
-            <p><strong>住：独山子亚朵，已定。</strong></p>
-            <p class="departure">16:30-17:00 取车补给后出发</p>
-            <ul class="day-alerts"><li>易堵｜G30 乌奎段 17:00-21:00；晚到不赶路。</li><li class="cold-note">天气｜独山子多云 13–24℃；当晚注意疲劳。</li></ul>
-          </div>
-          <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Urumqi%20Tianshan%20International%20Airport&amp;destination=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
+            <p class="trip-stat"><strong>约 260 km · 驾驶 3.5 小时</strong><span>（缓行 6 小时）</span></p>
+
+            <p class="stay-line">住：独山子亚朵</p>
+
+
+          <p class="risk-brief">晚高峰易堵，预留晚到时间</p></div>
+
         </summary>
-        <div class="day-body">
+        <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5%E9%85%92%E5%BA%97&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="独山子亚朵酒店" target="_blank" rel="noopener">独山子亚朵酒店</a></li></ol></div><div class="detail-facts"><p class="drive-scope">机场至酒店；不含取车</p><p class="departure">16:30-17:00 取车补给后出发</p><ul class="day-alerts"><li>易堵｜G30 乌奎段 17:00-21:00；晚到不赶路。</li><li class="cold-note">天气｜独山子多云 13–24℃；当晚注意疲劳。</li></ul></div>
           <div class="mini-map">
             <h4>当日路线</h4>
-            <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%A4%A9%E5%B1%B1%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a> → 昌吉/石河子方向补给 → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5" target="_blank" rel="noopener">独山子亚朵</a></p>
+            <p><a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%A4%A9%E5%B1%B1%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐天山国际机场" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a> → 昌吉/石河子方向补给 → <a href="https://uri.amap.com/search?keyword=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="独山子亚朵" target="_blank" rel="noopener">独山子亚朵</a></p>
           </div>
           <div class="timeline">
             <div class="item"><div class="time">10:00</div><div><h4>9C6495 从上海虹桥 T1 起飞</h4><p><span class="badge">航班时间已确认</span> 值机柜台和当日航班状态出发前复核。</p></div></div>
@@ -1240,24 +276,24 @@
           <div class="day-num">D2</div>
 <div class="day-title">
             <h3>10/2 独山子 → 赛里木湖</h3>
-            <div class="drive-metrics"><div><span>预计里程</span><strong>约 420<small> km</small></strong></div><div><span>预计驾驶</span><strong>5.5 小时</strong><em>拥堵缓行按 8 小时</em></div></div>
-            <p class="drive-scope">经精河、博乐方向；不含湖内行车</p>
-            <p><strong>住：Elaine御墅民俗，已定。</strong></p>
-            <p class="departure">08:30-09:00 出发</p>
-            <ul class="day-alerts"><li>易堵｜赛湖入口、服务区；湖内行车另算。</li><li class="cold-note">雨雪｜10/2 赛湖 1–8℃，小雨转雨夹雪。</li></ul>
-          </div>
-          <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5&amp;destination=Sayram%20Lake&amp;waypoints=Jinghe%20County%7CBole&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
+            <p class="trip-stat"><strong>约 420 km · 驾驶 5.5 小时</strong><span>（缓行 8 小时）</span></p>
+
+            <p class="stay-line">住：Elaine御墅民俗</p>
+
+
+          <p class="risk-brief">赛湖雨夹雪，湖边湿冷</p></div>
+
         </summary>
-        <div class="day-body">
+        <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="赛里木湖游客中心" target="_blank" rel="noopener">赛里木湖游客中心</a></li><li><a href="https://uri.amap.com/search?keyword=%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96+Elaine%E5%BE%A1%E5%A2%85%E6%B0%91%E4%BF%97&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="赛里木湖 Elaine御墅民俗" target="_blank" rel="noopener">赛里木湖 Elaine御墅民俗</a></li></ol><p class="nav-note">依次导航到途经点；道路管制以高德及现场公告为准。</p></div><div class="detail-facts"><p class="drive-scope">经精河、博乐方向；不含湖内行车</p><p class="departure">08:30-09:00 出发</p><ul class="day-alerts"><li>易堵｜赛湖入口、服务区；湖内行车另算。</li><li class="cold-note">雨雪｜10/2 赛湖 1–8℃，小雨转雨夹雪。</li></ul></div>
           <div class="mini-map">
             <h4>当日路线</h4>
-            <p>独山子 → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%B2%BE%E6%B2%B3%E5%8E%BF" target="_blank" rel="noopener">精河</a> / <a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8D%9A%E4%B9%90" target="_blank" rel="noopener">博乐</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=Sayram%20Lake" target="_blank" rel="noopener">赛里木湖</a> → Elaine御墅民俗</p>
+            <p>独山子 → <a href="https://uri.amap.com/search?keyword=%E7%B2%BE%E6%B2%B3%E5%8E%BF&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="精河县" target="_blank" rel="noopener">精河</a> / <a href="https://uri.amap.com/search?keyword=%E5%8D%9A%E4%B9%90&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="博乐" target="_blank" rel="noopener">博乐</a> → <a href="https://uri.amap.com/search?keyword=%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="赛里木湖游客中心" target="_blank" rel="noopener">赛里木湖</a> → Elaine御墅民俗</p>
           </div>
           <div class="timeline">
             <div class="item"><div class="time">08:30-09:00</div><div><h4>离开独山子，走高速西行</h4><p>不加额外景点。若导航沿 G30 直达赛湖更快，可取消博乐市区停靠；预留湖区雨雪、入口排队的余量。</p></div></div>
             <div class="item"><div class="time">中午</div><div><h4>精河/博乐方向补给</h4><p>午餐、加电/补能、买晚间路餐。十一期间服务区和景区入口可能排队。</p></div></div>
             <div class="item"><div class="time">下午</div><div><h4>抵达赛里木湖</h4><p><span class="badge reserve">自驾入园预约仍待确认</span> 车牌已拿到，按实际车辆完成预约并核对 10/3 再入园规则；未约到则改区间车。</p></div></div>
-            <div class="item"><div class="time">傍晚</div><div><h4>湖边日落与入住</h4><p><a href="https://www.google.com/maps/search/?api=1&amp;query=Elaine%E5%BE%A1%E5%A2%85%E6%B0%91%E4%BF%97%20%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96" target="_blank" rel="noopener">Elaine御墅民俗</a> 已预定，傍晚按天气和风力决定先入住还是先看日落。</p></div></div>
+            <div class="item"><div class="time">傍晚</div><div><h4>湖边日落与入住</h4><p><a href="https://uri.amap.com/search?keyword=Elaine%E5%BE%A1%E5%A2%85%E6%B0%91%E4%BF%97+%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="Elaine御墅民俗 赛里木湖" target="_blank" rel="noopener">Elaine御墅民俗</a> 已预定，傍晚按天气和风力决定先入住还是先看日落。</p></div></div>
           </div>
         </div>
       </details>
@@ -1267,18 +303,18 @@
           <div class="day-num">D3</div>
 <div class="day-title">
             <h3>10/3 赛里木湖半天 → 果子沟 → 伊宁</h3>
-            <div class="drive-metrics"><div><span>预计里程</span><strong>约 170<small> km</small></strong></div><div><span>预计驾驶</span><strong>3 小时</strong><em>拥堵缓行按 5 小时</em></div></div>
-            <p class="drive-scope">出湖至伊宁；湖区半天另计</p>
-            <p><strong>住：伊宁市红旗路亚朵，已定。</strong> 湖内驾驶另按 1.5 小时准备。</p>
-            <p class="departure">上午留半天湖区，午后出湖</p>
-            <ul class="day-alerts"><li>易堵｜赛果山区道路及果子沟停车点。</li><li class="cold-note">低温｜赛湖 -2–11℃；出发前查结冰，伊宁 8–26℃。</li></ul>
-          </div>
-          <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Sayram%20Lake&amp;destination=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;waypoints=Guozigou%20Bridge&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
+            <p class="trip-stat"><strong>约 170 km · 驾驶 3 小时</strong><span>（缓行 5 小时）</span></p>
+
+            <p class="stay-line">住：伊宁市红旗路亚朵</p>
+
+
+          <p class="risk-brief">赛湖低温 -2℃，先查结冰</p></div>
+
         </summary>
-        <div class="day-body">
+        <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E6%9E%9C%E5%AD%90%E6%B2%9F%E5%A4%A7%E6%A1%A5%E8%A7%82%E6%99%AF%E5%8F%B0&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="果子沟大桥观景台" target="_blank" rel="noopener">果子沟大桥观景台</a></li><li><a href="https://uri.amap.com/search?keyword=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5%E9%85%92%E5%BA%97&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="伊宁市红旗路亚朵酒店" target="_blank" rel="noopener">伊宁市红旗路亚朵酒店</a></li></ol><p class="nav-note">依次导航到途经点；道路管制以高德及现场公告为准。</p></div><div class="detail-facts"><p class="drive-scope">出湖至伊宁；湖区半天另计</p><p class="departure">上午留半天湖区，午后出湖</p><ul class="day-alerts"><li>易堵｜赛果山区道路及果子沟停车点。</li><li class="cold-note">低温｜赛湖 -2–11℃；出发前查结冰，伊宁 8–26℃。</li></ul></div>
           <div class="mini-map">
             <h4>当日路线</h4>
-            <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Sayram%20Lake" target="_blank" rel="noopener">赛里木湖</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=Guozigou%20Bridge" target="_blank" rel="noopener">果子沟大桥</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5" target="_blank" rel="noopener">伊宁市红旗路亚朵</a></p>
+            <p><a href="https://uri.amap.com/search?keyword=%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="赛里木湖游客中心" target="_blank" rel="noopener">赛里木湖</a> → <a href="https://uri.amap.com/search?keyword=%E6%9E%9C%E5%AD%90%E6%B2%9F%E5%A4%A7%E6%A1%A5%E8%A7%82%E6%99%AF%E5%8F%B0&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="果子沟大桥观景台" target="_blank" rel="noopener">果子沟大桥</a> → <a href="https://uri.amap.com/search?keyword=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="伊宁市红旗路亚朵" target="_blank" rel="noopener">伊宁市红旗路亚朵</a></p>
           </div>
           <div class="timeline">
             <div class="item"><div class="time">上午</div><div><h4>赛里木湖半日慢玩</h4><p>看湖面、雪山、草坡和湖边光线；不急着离开，这是这条线最值的自然时间。</p></div></div>
@@ -1293,18 +329,18 @@
           <div class="day-num">D4</div>
 <div class="day-title">
             <h3>10/4 伊宁 → 那拉提镇</h3>
-            <div class="drive-metrics"><div><span>预计里程</span><strong>约 270<small> km</small></strong></div><div><span>预计驾驶</span><strong>4 小时</strong><em>拥堵缓行按 6 小时</em></div></div>
-            <p class="drive-scope">伊宁至那拉提镇；景区行车另计</p>
-            <p><strong>住：那拉提镇酒店，已定。</strong></p>
-            <p class="departure">08:30-09:00 离开伊宁</p>
-            <ul class="day-alerts"><li>易堵｜S12 新源段 10:00-17:00；下午入园别晚出发。</li><li class="cold-note">天气｜县城参考多云 12–30℃，不代表草原温度。</li></ul>
-          </div>
-          <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;destination=Nalati%20Tourist%20Scenic%20Area&amp;travelmode=driving" target="_blank" rel="noopener">全天导航</a>
+            <p class="trip-stat"><strong>约 270 km · 驾驶 4 小时</strong><span>（缓行 6 小时）</span></p>
+
+            <p class="stay-line">住：那拉提镇酒店</p>
+
+
+          <p class="risk-brief">早出发，给下午入园留时间</p></div>
+
         </summary>
-        <div class="day-body">
+        <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E9%82%A3%E6%8B%89%E6%8F%90%E9%95%87&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="那拉提镇" target="_blank" rel="noopener">那拉提镇</a></li></ol></div><div class="detail-facts"><p class="drive-scope">伊宁至那拉提镇；景区行车另计</p><p class="departure">08:30-09:00 离开伊宁</p><ul class="day-alerts"><li>易堵｜S12 新源段 10:00-17:00；下午入园别晚出发。</li><li class="cold-note">天气｜县城参考多云 12–30℃，不代表草原温度。</li></ul></div>
           <div class="mini-map">
             <h4>当日路线</h4>
-            <p><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BC%8A%E5%AE%81" target="_blank" rel="noopener">伊宁</a> → 河谷路段 → <a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%82%A3%E6%8B%89%E6%8F%90%E9%95%87" target="_blank" rel="noopener">那拉提镇</a></p>
+            <p><a href="https://uri.amap.com/search?keyword=%E4%BC%8A%E5%AE%81&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="伊宁" target="_blank" rel="noopener">伊宁</a> → 河谷路段 → <a href="https://uri.amap.com/search?keyword=%E9%82%A3%E6%8B%89%E6%8F%90%E9%95%87&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="那拉提镇" target="_blank" rel="noopener">那拉提镇</a></p>
           </div>
           <div class="timeline">
             <div class="item"><div class="time">08:30-09:00</div><div><h4>早餐后离开伊宁</h4><p>计划下午入园就不再午后出发；备好路餐。S12 新源段国庆 10:00-17:00 易堵，留出弹性。</p></div></div>
@@ -1334,14 +370,14 @@
               <summary>
                 <span class="stage-day">D5 · 10/5</span>
                 <h4>那拉提 → 巴音布鲁克</h4>
-                <div class="drive-metrics"><div><span>预计里程</span><strong>约 90<small> km</small></strong></div><div><span>预计驾驶</span><strong>3 小时</strong><em>拥堵缓行按 5 小时</em></div></div>
-                <p class="drive-scope">独库中段；景区交通另计</p>
-                <p><strong>住：</strong>巴音景区酒店，已定可退。</p>
-                <p class="departure">出发前核验中段及次日北段</p>
-                <ul class="day-alerts"><li>易堵｜独库施工、入口放行。</li><li class="cold-note">雨雪｜0–18℃，多云转雨夹雪。</li></ul>
-                <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Nalati%20Tourist%20Scenic%20Area&amp;destination=Bayanbulak%20Grassland&amp;travelmode=driving" target="_blank" rel="noopener">D5 导航</a>
-              </summary>
-              <div class="day-body">
+                <p class="trip-stat"><strong>约 90 km · 驾驶 3 小时</strong><span>（缓行 5 小时）</span></p>
+
+                <p class="stay-line">住：巴音景区酒店（可退）</p>
+
+
+
+              <p class="risk-brief">雨夹雪；出发前同时核验 D6</p></summary>
+              <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E5%B7%B4%E9%9F%B3%E5%B8%83%E9%B2%81%E5%85%8B%E6%99%AF%E5%8C%BA%E5%A4%A7%E9%97%A8&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="巴音布鲁克景区大门" target="_blank" rel="noopener">巴音布鲁克景区大门</a></li></ol></div><div class="detail-facts"><p class="drive-scope">独库中段；景区交通另计</p><p class="departure">出发前核验中段及次日北段</p><ul class="day-alerts"><li>易堵｜独库施工、入口放行。</li><li class="cold-note">雨雪｜0–18℃，多云转雨夹雪。</li></ul></div>
                 <div class="mini-map"><h4>路线</h4><p>那拉提镇 → 巴音布鲁克</p></div>
                 <div class="timeline">
                   <div class="item"><div class="time">上午</div><div><h4>两天条件都稳定才启动</h4><p>复核中段当天放行、北段次日预期、雨雪和司机状态。</p></div></div>
@@ -1357,14 +393,14 @@
               <summary>
                 <span class="stage-day">D6 · 10/6</span>
                 <h4>巴音 → 独库北段 → 乌鲁木齐</h4>
-                <div class="drive-metrics"><div><span>预计里程</span><strong>约 585<small> km</small></strong></div><div><span>预计驾驶</span><strong>9 小时</strong><em>拥堵缓行按 12 小时</em></div></div>
-                <p class="drive-scope">经那拉提入口、乔尔玛、独山子</p>
-                <p><strong>住：</strong>机场北京北路亚朵，已定。</p>
-                <p class="departure">按放行时间及预约时段尽早出发</p>
-                <ul class="day-alerts"><li>易堵｜独库全天易堵，含施工等待。</li><li class="cold-note">雨雪｜巴音 -3–10℃、雨转雪。</li></ul>
-                <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Bayanbulak%20Grassland&amp;destination=Urumqi%20Tianshan%20International%20Airport&amp;waypoints=Nalati%7CQiaoerma%7CDushanzi&amp;travelmode=driving" target="_blank" rel="noopener">D6 导航</a>
-              </summary>
-              <div class="day-body">
+                <p class="trip-stat"><strong>约 585 km · 驾驶 9 小时</strong><span>（缓行 12 小时）</span></p>
+
+                <p class="stay-line">住：机场北京北路亚朵</p>
+
+
+
+              <p class="risk-brief">雨转雪风险，独库未确认放行</p></summary>
+              <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E7%8B%AC%E5%BA%93%E5%85%AC%E8%B7%AF%E9%82%A3%E6%8B%89%E6%8F%90%E5%85%A5%E5%8F%A3&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="独库公路那拉提入口" target="_blank" rel="noopener">独库公路那拉提入口</a></li><li><a href="https://uri.amap.com/search?keyword=%E4%B9%94%E5%B0%94%E7%8E%9B&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乔尔玛" target="_blank" rel="noopener">乔尔玛</a></li><li><a href="https://uri.amap.com/search?keyword=%E7%8B%AC%E5%B1%B1%E5%AD%90&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="独山子" target="_blank" rel="noopener">独山子</a></li><li><a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E4%BA%AC%E5%8C%97%E8%B7%AF%E4%BA%9A%E6%9C%B5%E9%85%92%E5%BA%97&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐国际机场北京北路亚朵酒店" target="_blank" rel="noopener">乌鲁木齐国际机场北京北路亚朵酒店</a></li></ol><p class="nav-note">依次导航到途经点；道路管制以高德及现场公告为准。</p></div><div class="detail-facts"><p class="drive-scope">经那拉提入口、乔尔玛、独山子</p><p class="departure">按放行时间及预约时段尽早出发</p><ul class="day-alerts"><li>易堵｜独库全天易堵，含施工等待。</li><li class="cold-note">雨雪｜巴音 -3–10℃、雨转雪。</li></ul></div>
                 <div class="mini-map"><h4>路线</h4><p>巴音布鲁克 → 那拉提入口 → 乔尔玛 → 独山子 → 机场酒店</p></div>
                 <div class="timeline">
                   <div class="item"><div class="time">出发前</div><div><h4>中、北段均须确认</h4><p>北段预约必须有效；如有结冰、管制或体力不足，不能硬闯。</p></div></div>
@@ -1385,14 +421,14 @@
               <summary>
                 <span class="stage-day">D5 · 10/5</span>
                 <h4>那拉提 → 巴伦台 → 和静</h4>
-                <div class="drive-metrics"><div><span>预计里程</span><strong>约 320<small> km</small></strong></div><div><span>预计驾驶</span><strong>6.5 小时</strong><em>拥堵缓行按 9 小时</em></div></div>
-                <p class="drive-scope">G218 山路及施工路段</p>
-                <p><strong>住：</strong>和静镇酒店，已定。</p>
-                <p class="departure">08:30-09:00 出发，不排上午景区</p>
-                <ul class="day-alerts"><li>易堵｜那拉提—巩乃斯全天易堵。</li><li class="cold-note">天气｜和静 10–22℃；山口另核。</li></ul>
-                <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=Nalati%20Tourist%20Scenic%20Area&amp;destination=%E5%92%8C%E9%9D%99%E9%95%87&amp;waypoints=%E5%B7%B4%E4%BC%A6%E5%8F%B0&amp;travelmode=driving" target="_blank" rel="noopener">D5 导航</a>
-              </summary>
-              <div class="day-body">
+                <p class="trip-stat"><strong>约 320 km · 驾驶 6.5 小时</strong><span>（缓行 9 小时）</span></p>
+
+                <p class="stay-line">住：和静镇酒店</p>
+
+
+
+              <p class="risk-brief">G218 易堵，全天留给转场</p></summary>
+              <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E5%B7%A9%E4%B9%83%E6%96%AF%E9%95%87&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="巩乃斯镇" target="_blank" rel="noopener">巩乃斯镇</a></li><li><a href="https://uri.amap.com/search?keyword=%E5%B7%B4%E4%BB%91%E5%8F%B0%E9%95%87&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="巴仑台镇" target="_blank" rel="noopener">巴仑台镇</a></li><li><a href="https://uri.amap.com/search?keyword=%E5%92%8C%E9%9D%99%E9%95%87&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="和静镇" target="_blank" rel="noopener">和静镇</a></li></ol><p class="nav-note">依次导航到途经点；道路管制以高德及现场公告为准。</p></div><div class="detail-facts"><p class="drive-scope">G218 山路及施工路段</p><p class="departure">08:30-09:00 出发，不排上午景区</p><ul class="day-alerts"><li>易堵｜那拉提—巩乃斯全天易堵。</li><li class="cold-note">天气｜和静 10–22℃；山口另核。</li></ul></div>
                 <div class="mini-map"><h4>路线</h4><p>那拉提镇 → 巩乃斯 → 巴伦台 → 和静镇</p></div>
                 <div class="timeline">
                   <div class="item"><div class="time">08:30-09:00</div><div><h4>早餐、补能后出发</h4><p>全天留给 G218 转场，不再安排上午景区。</p></div></div>
@@ -1408,14 +444,14 @@
               <summary>
                 <span class="stage-day">D6 · 10/6</span>
                 <h4>和静 → 乌尉高速 → 乌鲁木齐</h4>
-                <div class="drive-metrics"><div><span>预计里程</span><strong>约 260<small> km</small></strong></div><div><span>预计驾驶</span><strong>3.5 小时</strong><em>拥堵缓行按 5.5 小时</em></div></div>
-                <p class="drive-scope">经 G0711、天山胜利隧道</p>
-                <p><strong>住：</strong>机场北京北路亚朵，已定。</p>
-                <p class="departure">建议 09:00 左右出发</p>
-                <ul class="day-alerts"><li>易堵｜10:00-13:00、15:00-19:00。</li><li class="cold-note">天气｜乌市 4–13℃、雨转阴大风。</li></ul>
-                <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=%E5%92%8C%E9%9D%99%E9%95%87&amp;destination=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E4%BA%AC%E5%8C%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;travelmode=driving" target="_blank" rel="noopener">D6 导航</a>
-              </summary>
-              <div class="day-body">
+                <p class="trip-stat"><strong>约 260 km · 驾驶 3.5 小时</strong><span>（缓行 5.5 小时）</span></p>
+
+                <p class="stay-line">住：机场北京北路亚朵</p>
+
+
+
+              <p class="risk-brief">高速返程高峰，注意风雨</p></summary>
+              <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E4%BA%AC%E5%8C%97%E8%B7%AF%E4%BA%9A%E6%9C%B5%E9%85%92%E5%BA%97&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐国际机场北京北路亚朵酒店" target="_blank" rel="noopener">乌鲁木齐国际机场北京北路亚朵酒店</a></li></ol><p class="nav-note">优先选择经 G0711 乌尉高速的路线；通行以当天管制为准。</p></div><div class="detail-facts"><p class="drive-scope">经 G0711、天山胜利隧道</p><p class="departure">建议 09:00 左右出发</p><ul class="day-alerts"><li>易堵｜10:00-13:00、15:00-19:00。</li><li class="cold-note">天气｜乌市 4–13℃、雨转阴大风。</li></ul></div>
                 <div class="mini-map"><h4>路线</h4><p>和静 → G0711 乌尉高速 → 天山胜利隧道 → 机场酒店</p></div>
                 <div class="timeline">
                   <div class="item"><div class="time">出发前</div><div><h4>核验高速与风区</h4><p>确认天山胜利隧道、入口管制和服务区开放情况。</p></div></div>
@@ -1438,15 +474,15 @@
           <div class="day-num">D7</div>
 <div class="day-title">
             <h3>10/7 乌鲁木齐 → 上海</h3>
-            <div class="drive-metrics"><div><span>预计里程</span><strong>约 20<small> km</small></strong></div><div><span>预计驾驶</span><strong>0.5 小时</strong><em>还车衔接按 1.5 小时</em></div></div>
-            <p class="drive-scope">酒店至还车点暂估，出发前导航核准</p>
-            <p><strong>UQ2599 10:00 起飞。</strong> 值机安检时间另留。</p>
-            <p class="departure">建议 06:30-07:00 出发还车，10:00 起飞</p>
-            <ul class="day-alerts"><li>衔接｜还车、步行、值机安检分别留时，勿按 14:00 还车截止倒推。</li><li class="cold-note">低温｜乌鲁木齐多云 2–10℃；厚外套留在手边。</li></ul>
-          </div>
-          <a class="route-button" href="https://www.google.com/maps/dir/?api=1&amp;origin=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E4%BA%AC%E5%8C%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;destination=Urumqi%20Tianshan%20International%20Airport&amp;travelmode=driving" target="_blank" rel="noopener">机场导航</a>
+            <p class="trip-stat"><strong>约 20 km · 驾驶 0.5 小时</strong><span>（还车衔接 1.5 小时）</span></p>
+
+            <p class="stay-line">UQ2599 10:00 起飞。 值机安检时间另留。</p>
+
+
+          <p class="risk-brief">10:00 起飞，清晨先还车</p></div>
+
         </summary>
-        <div class="day-body">
+        <div class="day-body"><div class="stage-navigation"><h4>高德导航</h4><ol><li><a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%A4%A9%E5%B1%B1%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E5%8C%BA%E8%88%AA%E7%AB%99%E6%A5%BC+%E6%90%BA%E7%A8%8B%E7%A7%9F%E8%BD%A6%E4%B8%AD%E5%BF%83&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐天山国际机场北区航站楼 携程租车中心" target="_blank" rel="noopener">乌鲁木齐天山国际机场北区航站楼 携程租车中心</a></li></ol></div><div class="detail-facts"><p class="drive-scope">酒店至还车点暂估，出发前导航核准</p><p class="departure">建议 06:30-07:00 出发还车，10:00 起飞</p><ul class="day-alerts"><li>衔接｜还车、步行、值机安检分别留时，勿按 14:00 还车截止倒推。</li><li class="cold-note">低温｜乌鲁木齐多云 2–10℃；厚外套留在手边。</li></ul></div>
           <div class="timeline">
             <div class="item"><div class="time">清晨</div><div><h4>还车和值机</h4><p>到北区航站楼到达层携程租车中心还车；返程 10:00 起飞，建议按“先还车，再值机安检”的节奏留足余量。</p></div></div>
             <div class="item"><div class="time">10:00</div><div><h4>UQ2599 乌鲁木齐飞上海浦东</h4><p><span class="badge">航班时间已确认</span> 到达时间 14:45；航站楼、值机柜台和行李额度出发前复核。</p></div></div>
@@ -1524,12 +560,16 @@
       <details style="margin-top:10px;font-size:13px;color:var(--muted)"><summary>查看预报来源</summary><p><a href="https://www.weather.com.cn/weather/101130204.shtml" target="_blank" rel="noopener">独山子</a> · <a href="https://www.weather.com.cn/weather/10113160102A.shtml" target="_blank" rel="noopener">赛湖景区</a> · <a href="https://www.weather.com.cn/weather/101131001.shtml" target="_blank" rel="noopener">伊宁</a> · <a href="https://www.weather.com.cn/weather/101131006.shtml" target="_blank" rel="noopener">新源县城</a> · <a href="https://www.weather.com.cn/weather15d/101130610.shtml" target="_blank" rel="noopener">巴音布鲁克</a> · <a href="https://www.weather.com.cn/weather15d/101130606.shtml" target="_blank" rel="noopener">和静</a> · <a href="https://www.weather.com.cn/weather15d/101130101.shtml" target="_blank" rel="noopener">乌鲁木齐</a></p></details>
     </section>
 
-    <section id="overview" aria-labelledby="overview-title">
+    <section id="overview" aria-labelledby="overview-title" data-map-plan="b">
       <div class="section-head">
         <h2 id="overview-title">行程总览地图</h2>
-        <p>同一比例尺的新疆局部底图；深色为已确定主线，橙色为 Plan A，绿色为 Plan B。</p>
+        <p>共同路线保留，仅切换 D5-D6 分支。</p>
       </div>
-      <div class="panel map-wrap">
+      <div class="map-tabs" role="tablist" aria-label="地图路线方案">
+        <button type="button" role="tab" id="map-tab-a" aria-controls="route-panel" aria-selected="false" tabindex="-1" data-plan="a">Plan A · 独库</button>
+        <button type="button" role="tab" id="map-tab-b" aria-controls="route-panel" aria-selected="true" data-plan="b">Plan B · 和静</button>
+      </div>
+      <div class="panel map-wrap" id="route-panel" role="tabpanel" aria-labelledby="map-tab-b">
         <svg class="route-map" viewBox="0 0 720 520" role="img" aria-label="新疆自驾路线真实比例尺局部图">
           <defs>
             <filter id="rough">
@@ -1546,12 +586,12 @@
           </g>
 
           <path class="route-shadow" d="M631.6 226.5 L415 178 L248.3 145.6 L179.6 110.4 L104.7 145.5 L87.3 173.6 L116.9 225.4 L278.7 294.6"/>
-          <path class="route-shadow" d="M278.7 294.6 L353.1 327.9 L343.8 222.5 L415 178 L631.6 226.5"/>
-          <path class="route-shadow" d="M278.7 294.6 L533.7 362 L540.3 409.6 L631.6 226.5"/>
+          <path class="route-shadow" data-map-route="a" d="M278.7 294.6 L353.1 327.9 L343.8 222.5 L415 178 L631.6 226.5"/>
+          <path class="route-shadow" data-map-route="b" d="M278.7 294.6 L533.7 362 L540.3 409.6 L631.6 226.5"/>
 
           <path class="route-path fixed" filter="url(#rough)" d="M631.6 226.5 L415 178 L248.3 145.6 L179.6 110.4 L104.7 145.5 L87.3 173.6 L116.9 225.4 L278.7 294.6"/>
-          <path class="route-path plan-a" filter="url(#rough)" d="M278.7 294.6 L353.1 327.9 L343.8 222.5 L415 178 L631.6 226.5"/>
-          <path class="route-path plan-b" filter="url(#rough)" d="M278.7 294.6 L533.7 362 L540.3 409.6 L631.6 226.5"/>
+          <path class="route-path plan-a" data-map-route="a" filter="url(#rough)" d="M278.7 294.6 L353.1 327.9 L343.8 222.5 L415 178 L631.6 226.5"/>
+          <path class="route-path plan-b" data-map-route="b" filter="url(#rough)" d="M278.7 294.6 L533.7 362 L540.3 409.6 L631.6 226.5"/>
 
           <circle class="confirmed-node" cx="631.6" cy="226.5" r="6"/>
           <text x="513.6" y="210.5" class="map-label" style="font-weight:900">乌鲁木齐机场</text>
@@ -1582,6 +622,7 @@
           <text x="286.7" y="314.6" class="map-label" style="font-weight:900">那拉提镇</text>
           <text x="286.7" y="334.6" class="map-small">已定：D4 那拉提镇酒店</text>
 
+          <g data-map-route="a">
           <circle class="plan-a-node" cx="353.1" cy="327.9" r="6"/>
           <text x="362.1" y="345.9" class="map-label" style="font-weight:900">巴音布鲁克</text>
           <text x="362.1" y="365.9" class="map-small">已定可退：D5 景区酒店</text>
@@ -1590,6 +631,8 @@
           <text x="353.8" y="213.5" class="map-label">乔尔玛</text>
           <text x="353.8" y="233.5" class="map-small">独库北段判断点</text>
 
+          </g>
+          <g data-map-route="b">
           <circle class="plan-b-node" cx="533.7" cy="362" r="6"/>
           <text x="543.7" y="354" class="map-label" style="font-weight:900">巴伦台</text>
           <text x="543.7" y="374" class="map-small">Plan B 东线返乌</text>
@@ -1597,12 +640,14 @@
           <circle class="plan-b-node" cx="540.3" cy="409.6" r="5.2"/>
           <text x="549.3" y="430.6" class="map-label" style="font-weight:900">和静</text>
           <text x="549.3" y="448.6" class="map-small">已定：D5 和静镇酒店</text>
+          </g>
         </svg>
         <div class="legend">
           <span><i class="swatch" style="background:var(--fixed-route)"></i>已确定主线：机场、独山子、赛湖、伊宁、那拉提</span>
-          <span><i class="swatch" style="background:var(--d5a)"></i>Plan A：巴音布鲁克 + 独库北段</span>
-          <span><i class="swatch" style="background:var(--d5b)"></i>Plan B：巴伦台/和静东线返乌</span>
+          <span data-map-route="a"><i class="swatch" style="background:var(--d5a)"></i>Plan A：巴音布鲁克 + 独库北段</span>
+          <span data-map-route="b"><i class="swatch" style="background:var(--d5b)"></i>Plan B：巴伦台/和静东线返乌</span>
         </div>
+        <p id="map-itinerary" class="map-itinerary" aria-live="polite">D5 那拉提 → 巴伦台 → 和静；D6 经乌尉高速返乌。</p>
       </div>
     </section>
 
@@ -1658,7 +703,7 @@
           <p class="meta">2026-10-01 上海 → 乌鲁木齐，已预定</p>
           <dl class="facts">
             <dt>时间</dt><dd><span class="badge">10:00-15:20</span></dd>
-            <dt>机场</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Shanghai%20Hongqiao%20International%20Airport%20T1" target="_blank" rel="noopener">上海虹桥国际机场 T1</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=Urumqi%20Tianshan%20International%20Airport" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a></dd>
+            <dt>机场</dt><dd><a href="https://uri.amap.com/search?keyword=%E4%B8%8A%E6%B5%B7%E8%99%B9%E6%A1%A5%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BAT1%E8%88%AA%E7%AB%99%E6%A5%BC&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="上海虹桥国际机场T1航站楼" target="_blank" rel="noopener">上海虹桥国际机场 T1</a> → <a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%A4%A9%E5%B1%B1%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E5%8C%BA%E8%88%AA%E7%AB%99%E6%A5%BC&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐天山国际机场北区航站楼" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a></dd>
             <dt>备注</dt><dd>航班时间已确认；航站楼、值机柜台和当日航班状态出发前再复核。</dd>
           </dl>
         </article>
@@ -1667,7 +712,7 @@
           <p class="meta">2026-10-07 乌鲁木齐 → 上海，已预定</p>
           <dl class="facts">
             <dt>时间</dt><dd><span class="badge">10:00-14:45</span></dd>
-            <dt>机场</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Urumqi%20Tianshan%20International%20Airport" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a> → <a href="https://www.google.com/maps/search/?api=1&amp;query=Shanghai%20Pudong%20International%20Airport%20T2" target="_blank" rel="noopener">上海浦东国际机场 T2</a></dd>
+            <dt>机场</dt><dd><a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%A4%A9%E5%B1%B1%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E5%8C%BA%E8%88%AA%E7%AB%99%E6%A5%BC&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐天山国际机场北区航站楼" target="_blank" rel="noopener">乌鲁木齐天山国际机场</a> → <a href="https://uri.amap.com/search?keyword=%E4%B8%8A%E6%B5%B7%E6%B5%A6%E4%B8%9C%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BAT2%E8%88%AA%E7%AB%99%E6%A5%BC&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="上海浦东国际机场T2航站楼" target="_blank" rel="noopener">上海浦东国际机场 T2</a></dd>
             <dt>备注</dt><dd>D6 晚必须住机场附近，D7 早上不安排市区活动；值机柜台和当日航班状态出发前复核。</dd>
           </dl>
         </article>
@@ -1675,7 +720,7 @@
           <h3>租车 理想 L8</h3>
           <p class="meta">2026-10-01 14:00 至 2026-10-07 14:00，已预定，车牌已拿到</p>
           <dl class="facts">
-            <dt>取车</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E5%8C%BA%E8%88%AA%E7%AB%99%E6%A5%BC%E5%88%B0%E8%BE%BE%E5%B1%82%20%E6%90%BA%E7%A8%8B%E7%A7%9F%E8%BD%A6%E4%B8%AD%E5%BF%83" target="_blank" rel="noopener">乌鲁木齐国际机场北区航站楼到达层 携程租车中心</a></dd>
+            <dt>取车</dt><dd><a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E5%8C%BA%E8%88%AA%E7%AB%99%E6%A5%BC%E5%88%B0%E8%BE%BE%E5%B1%82+%E6%90%BA%E7%A8%8B%E7%A7%9F%E8%BD%A6%E4%B8%AD%E5%BF%83&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐国际机场北区航站楼到达层 携程租车中心" target="_blank" rel="noopener">乌鲁木齐国际机场北区航站楼到达层 携程租车中心</a></dd>
             <dt>还车</dt><dd>同地点，2026-10-07 14:00 前。</dd>
             <dt>提醒</dt><dd>返程航班 10:00 起飞，建议 10/6 晚或 10/7 清晨完成还车和值机衔接。</dd>
           </dl>
@@ -1684,7 +729,7 @@
           <h3>D1 独山子亚朵</h3>
           <p class="meta">2026-10-01 至 2026-10-02，已预定</p>
           <dl class="facts">
-            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5" target="_blank" rel="noopener">独山子亚朵</a></dd>
+            <dt>导航</dt><dd><a href="https://uri.amap.com/search?keyword=%E7%8B%AC%E5%B1%B1%E5%AD%90%E4%BA%9A%E6%9C%B5&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="独山子亚朵" target="_blank" rel="noopener">独山子亚朵</a></dd>
             <dt>重点</dt><dd>晚到入住、停车、早餐时间。</dd>
           </dl>
         </article>
@@ -1692,7 +737,7 @@
           <h3>D2 Elaine御墅民俗</h3>
           <p class="meta">2026-10-02 至 2026-10-03，已预定</p>
           <dl class="facts">
-            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Elaine%E5%BE%A1%E5%A2%85%E6%B0%91%E4%BF%97%20%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96" target="_blank" rel="noopener">Elaine御墅民俗</a></dd>
+            <dt>导航</dt><dd><a href="https://uri.amap.com/search?keyword=Elaine%E5%BE%A1%E5%A2%85%E6%B0%91%E4%BF%97+%E8%B5%9B%E9%87%8C%E6%9C%A8%E6%B9%96&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="Elaine御墅民俗 赛里木湖" target="_blank" rel="noopener">Elaine御墅民俗</a></dd>
             <dt>重点</dt><dd>停车、最晚到店、湖区内外位置。</dd>
           </dl>
         </article>
@@ -1700,7 +745,7 @@
           <h3>D3 伊宁市红旗路亚朵</h3>
           <p class="meta">2026-10-03 至 2026-10-04，已预定</p>
           <dl class="facts">
-            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5" target="_blank" rel="noopener">伊宁市红旗路亚朵</a></dd>
+            <dt>导航</dt><dd><a href="https://uri.amap.com/search?keyword=%E4%BC%8A%E5%AE%81%E5%B8%82%E7%BA%A2%E6%97%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="伊宁市红旗路亚朵" target="_blank" rel="noopener">伊宁市红旗路亚朵</a></dd>
             <dt>重点</dt><dd>停车、早餐、洗衣；伊宁只做恢复城市。</dd>
           </dl>
         </article>
@@ -1708,7 +753,7 @@
           <h3>D4 那拉提镇住宿</h3>
           <p class="meta">2026-10-04 至 2026-10-05，已预定</p>
           <dl class="facts">
-            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%82%A3%E6%8B%89%E6%8F%90%E9%95%87" target="_blank" rel="noopener">那拉提镇</a></dd>
+            <dt>导航</dt><dd><a href="https://uri.amap.com/search?keyword=%E9%82%A3%E6%8B%89%E6%8F%90%E9%95%87&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="那拉提镇" target="_blank" rel="noopener">那拉提镇</a></dd>
             <dt>重点</dt><dd>酒店名称待补；出发前确认停车、早餐和最晚到店。</dd>
           </dl>
         </article>
@@ -1716,7 +761,7 @@
           <h3>D5 巴音布鲁克景区住宿</h3>
           <p class="meta">2026-10-05 至 2026-10-06，已预定，可退</p>
           <dl class="facts">
-            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B7%B4%E9%9F%B3%E5%B8%83%E9%B2%81%E5%85%8B%E6%99%AF%E5%8C%BA" target="_blank" rel="noopener">巴音布鲁克景区</a></dd>
+            <dt>导航</dt><dd><a href="https://uri.amap.com/search?keyword=%E5%B7%B4%E9%9F%B3%E5%B8%83%E9%B2%81%E5%85%8B%E6%99%AF%E5%8C%BA&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="巴音布鲁克景区" target="_blank" rel="noopener">巴音布鲁克景区</a></dd>
             <dt>重点</dt><dd>作为 Plan A 房源保留；确认免费取消截止时间、停车和供暖。</dd>
           </dl>
         </article>
@@ -1724,7 +769,7 @@
           <h3>D5 和静镇住宿</h3>
           <p class="meta">2026-10-05 至 2026-10-06，已预定</p>
           <dl class="facts">
-            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%92%8C%E9%9D%99%E9%95%87" target="_blank" rel="noopener">和静镇</a></dd>
+            <dt>导航</dt><dd><a href="https://uri.amap.com/search?keyword=%E5%92%8C%E9%9D%99%E9%95%87&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="和静镇" target="_blank" rel="noopener">和静镇</a></dd>
             <dt>重点</dt><dd>作为 Plan B 房源；出发前确认停车、早餐和最晚到店。</dd>
           </dl>
         </article>
@@ -1732,7 +777,7 @@
           <h3>D6 乌鲁木齐国际机场北京北路亚朵</h3>
           <p class="meta">2026-10-06 至 2026-10-07，已预定</p>
           <dl class="facts">
-            <dt>导航</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E4%BA%AC%E5%8C%97%E8%B7%AF%E4%BA%9A%E6%9C%B5" target="_blank" rel="noopener">乌鲁木齐国际机场北京北路亚朵</a></dd>
+            <dt>导航</dt><dd><a href="https://uri.amap.com/search?keyword=%E4%B9%8C%E9%B2%81%E6%9C%A8%E9%BD%90%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA%E5%8C%97%E4%BA%AC%E5%8C%97%E8%B7%AF%E4%BA%9A%E6%9C%B5&amp;view=list&amp;src=xinjiang-roadbook&amp;callnative=1" data-amap-name="乌鲁木齐国际机场北京北路亚朵" target="_blank" rel="noopener">乌鲁木齐国际机场北京北路亚朵</a></dd>
             <dt>重点</dt><dd>到机场时间、送机、停车、充电。</dd>
           </dl>
         </article>
@@ -1744,6 +789,53 @@
 
   <script>
     const TZ = "Asia/Shanghai";
+    const planMap = document.getElementById("overview");
+    const mapTabs = [...document.querySelectorAll(".map-tabs [role=tab]")];
+    function setMapPlan(plan) {
+      planMap.dataset.mapPlan = plan;
+      mapTabs.forEach(tab => {
+        const selected = tab.dataset.plan === plan;
+        tab.setAttribute("aria-selected", String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+      });
+      document.getElementById("route-panel").setAttribute("aria-labelledby", `map-tab-${plan}`);
+      document.getElementById("map-itinerary").textContent = plan === "a"
+        ? "D5 那拉提 → 巴音布鲁克；D6 经那拉提、乔尔玛、独山子返乌。"
+        : "D5 那拉提 → 巴伦台 → 和静；D6 经乌尉高速返乌。";
+    }
+    mapTabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => setMapPlan(tab.dataset.plan));
+      tab.addEventListener("keydown", event => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? 1 : 1-index;
+        setMapPlan(mapTabs[next].dataset.plan);
+        mapTabs[next].focus();
+      });
+    });
+    // Name-based native routes avoid inventing coordinates for hotel entrances.
+    document.addEventListener("click", event => {
+      const link = event.target.closest("a[data-amap-name]");
+      if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+      const ua = navigator.userAgent;
+      const ios = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      if ((!ios && !/Android/i.test(ua)) || /MicroMessenger|QQ\//i.test(ua)) return;
+      event.preventDefault();
+      const params = new URLSearchParams(ios
+        ? {sourceApplication:"XinjiangRoadbook", dname:link.dataset.amapName, t:"0", m:"0"}
+        : {sourceApplication:"XinjiangRoadbook", keyword:link.dataset.amapName, style:"0"});
+      const native = (ios ? "iosamap://path?" : "androidamap://keywordNavi?") + params.toString().replace(/\+/g, "%20");
+      let timer;
+      const cleanup = () => { clearTimeout(timer); document.removeEventListener("visibilitychange", visibility); window.removeEventListener("pagehide", cleanup); };
+      const visibility = () => { if (document.hidden) cleanup(); };
+      document.addEventListener("visibilitychange", visibility);
+      window.addEventListener("pagehide", cleanup, {once:true});
+      timer = setTimeout(() => {
+        cleanup();
+        if (!document.hidden) window.location.href = link.href;
+      }, 2200);
+      window.location.href = native;
+    });
     const events = [
       {
         title: "9C6495 上海飞乌鲁木齐",
